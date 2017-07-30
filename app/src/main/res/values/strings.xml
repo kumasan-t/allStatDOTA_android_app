@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">allStatDOTA</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="activity_splash_layout_imageview_contentdescription">DOTA 2 logo</string>
 </resources>
