@@ -11,7 +11,7 @@ import com.github.randombear.allstatdota.dataaccessobject.dotainterface.DotaInte
 public class DataAccessObject implements DotaInterface {
 
     @Override
-    public void getMatchDetails() {
+    public void getMatchDetails(String matchID) {
 
     }
 

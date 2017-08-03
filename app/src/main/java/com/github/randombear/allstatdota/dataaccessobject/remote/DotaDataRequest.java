@@ -24,6 +24,7 @@ public class DotaDataRequest implements DotaInterface {
     private static String API_VERSION = "v1";
 
     private static String MATCH_HISTORY_PATH = "GetMatchHistory";
+    private static String MATCH_DETAILS_PATH = "GetMatchDetails";
 
     private String mSteamAPIKey;
     private String mSteamUserID;
@@ -65,7 +66,7 @@ public class DotaDataRequest implements DotaInterface {
     }
 
     @Override
-    public void getMatchDetails() {
+    public void getMatchDetails(String matchID) {
 
     }
 

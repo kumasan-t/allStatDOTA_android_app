@@ -8,17 +8,16 @@ package com.github.randombear.allstatdota.dataaccessobject.dotainterface;
 
 public interface DotaInterface {
 
-    //Dota 2 Matches
-
     /**
      * Used to get a list of matches played.
      */
-    public void getMatchHistory();
+    void getMatchHistory();
 
     /**
      * Used to get detailed information about a specified match.
+     * @param matchID ID of the match specified.
      */
-    public void getMatchDetails();
+    void getMatchDetails(String matchID);
 
     /**
      * Used to get the matches in the order which they were recorded (i.e. sorted ascending by
@@ -27,31 +26,31 @@ public interface DotaInterface {
      * GetMatchHistory with GetMatchDetails - i.e. each page returned requires no additional calls
      * for more data.
      */
-    public void getMatchHistoryBySequenceNumber();
+    void getMatchHistoryBySequenceNumber();
 
     /**
      * Used to get a list of the tournament leagues that are available for viewing in the client
      * (i.e. you can buy a ticket to them).
      * Intended for use in conjunction with GetLiveLeagueGames.
      */
-    public void getLeagueListing();
+    void getLeagueListing();
 
     /**
      * Used to get a list of the tournament games that are currently in progress.
      */
-    public void getLiveLeagueGames();
+    void getLiveLeagueGames();
 
     /**
      * Used to get data about teams that have been created in the client.
      * Note that this call by default will return a list of every team (with 100 per page)
      * sorted ascending by team_id
      */
-    public void getTeamInfoByTeamID();
+    void getTeamInfoByTeamID();
 
     /**
      * Used to get details about a player's Steam account.
      */
-    public void getPlayerSummaries();
+    void getPlayerSummaries();
 
     /**
      * Used to get an UP-TO-DATE list of in-game items.
@@ -59,7 +58,7 @@ public interface DotaInterface {
      *
      * see: https://wiki.teamfortress.com/wiki/WebAPI/GetGameItems .
      */
-    public void getGameItems();
+    void getGameItems();
 
     /**
      * Used to get an UP-TO-DATE list of heroes.
@@ -67,5 +66,5 @@ public interface DotaInterface {
      * names of heroes.
      * see: https://wiki.teamfortress.com/wiki/WebAPI/GetHeroes .
      */
-    public void getHeroes();
+    void getHeroes();
 }
