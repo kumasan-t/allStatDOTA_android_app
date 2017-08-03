@@ -4,12 +4,11 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.github.randombear.allstatdota.R;
+import com.github.randombear.allstatdota.conn.RequestQueueSingleton;
 import com.github.randombear.allstatdota.dataaccessobject.dotainterface.DotaInterface;
 
 import org.json.JSONException;
@@ -33,6 +32,11 @@ public class DotaDataRequest implements DotaInterface {
 
     private Context mContext;
 
+    /**
+     * Constructor of the data retrieving object
+     * @param context   context used to retrieve the request queue instance and some variable that
+     *                  cannot be exposed on the internet :)
+     */
     public DotaDataRequest(Context context) {
         this.mContext = context;
         this.mSteamUserID = mContext.getString(R.string.local_steam_user_id);
@@ -101,7 +105,6 @@ public class DotaDataRequest implements DotaInterface {
     }
 
     private void forwardRequest(Uri uri) {
-        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(uri.toString(),null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -120,6 +123,6 @@ public class DotaDataRequest implements DotaInterface {
                     }
                 });
 
-        requestQueue.add(jsonObjectRequest);
+        RequestQueueSingleton.getInstance(mContext.getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
 }
