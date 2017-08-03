@@ -4,14 +4,16 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.randombear.allstatdota.R;
 import com.github.randombear.allstatdota.dataaccessobject.dotainterface.DotaInterface;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * =================================
@@ -47,27 +49,20 @@ public class DotaDataRequest implements DotaInterface {
                 .appendQueryParameter("account_id", mSteamUserID)
                 .build();
 
-        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, builtURI.toString(),
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                            Log.d("RESULT", response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("ERROR", error.getMessage());
-                 }
-        });
-
-        requestQueue.add(stringRequest);
+        forwardRequest(builtURI);
     }
 
     @Override
     public void getMatchDetails(String matchID) {
+        Uri builtURI = Uri.parse(BASE_URL)
+                .buildUpon()
+                .appendPath(MATCH_DETAILS_PATH)
+                .appendPath(API_VERSION)
+                .appendQueryParameter("key", mSteamAPIKey)
+                .appendQueryParameter("match_id", matchID)
+                .build();
 
+        forwardRequest(builtURI);
     }
 
     @Override
@@ -103,5 +98,28 @@ public class DotaDataRequest implements DotaInterface {
     @Override
     public void getHeroes() {
 
+    }
+
+    private void forwardRequest(Uri uri) {
+        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(uri.toString(),null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Log.d("RESPONSE", response.toString(3));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+        requestQueue.add(jsonObjectRequest);
     }
 }
