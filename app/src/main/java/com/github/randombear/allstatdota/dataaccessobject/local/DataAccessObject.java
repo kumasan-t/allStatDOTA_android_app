@@ -1,6 +1,6 @@
 package com.github.randombear.allstatdota.dataaccessobject.local;
 
-import com.github.randombear.allstatdota.dataaccessobject.dotainterface.DotaInterface;
+import com.github.randombear.allstatdota.dataaccessobject.interfaces.DotaInterface;
 
 /**
  * =================================

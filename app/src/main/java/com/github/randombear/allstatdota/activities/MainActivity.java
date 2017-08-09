@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DotaDataRequest dotaDataRequest = new DotaDataRequest(this.getBaseContext());
-        dotaDataRequest.getMatchHistory();
+        dotaDataRequest.getMatchDetails("3361373407");
         
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

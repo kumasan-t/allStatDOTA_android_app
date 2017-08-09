@@ -1,4 +1,4 @@
-package com.github.randombear.allstatdota.dataaccessobject.dotainterface;
+package com.github.randombear.allstatdota.dataaccessobject.interfaces;
 
 /**
  * =================================

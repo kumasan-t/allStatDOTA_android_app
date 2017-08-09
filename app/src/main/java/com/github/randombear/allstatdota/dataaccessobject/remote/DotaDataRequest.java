@@ -9,7 +9,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.github.randombear.allstatdota.R;
 import com.github.randombear.allstatdota.conn.RequestQueueSingleton;
-import com.github.randombear.allstatdota.dataaccessobject.dotainterface.DotaInterface;
+import com.github.randombear.allstatdota.dataaccessobject.interfaces.DotaInterface;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +32,7 @@ public class DotaDataRequest implements DotaInterface {
 
     private Context mContext;
 
+    private JSONObject ansasd;
     /**
      * Constructor of the data retrieving object
      * @param context   context used to retrieve the request queue instance and some variable that
