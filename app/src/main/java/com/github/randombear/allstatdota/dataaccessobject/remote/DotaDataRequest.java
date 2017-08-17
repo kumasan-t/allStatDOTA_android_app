@@ -9,9 +9,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.github.randombear.allstatdota.R;
 import com.github.randombear.allstatdota.conn.RequestQueueSingleton;
-import com.github.randombear.allstatdota.dataaccessobject.interfaces.DotaInterface;
+import com.github.randombear.allstatdota.dataaccessobject.interfaces.VolleyCallback;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -20,7 +19,8 @@ import org.json.JSONObject;
  * =================================
  */
 
-public class DotaDataRequest implements DotaInterface {
+public class DotaDataRequest {
+    private static String TAG = "JSON_DATA_RESPONSE";
     private static String BASE_URL = "http://api.steampowered.com/IDOTA2Match_570/";
     private static String API_VERSION = "v1";
 
@@ -32,11 +32,11 @@ public class DotaDataRequest implements DotaInterface {
 
     private Context mContext;
 
-    private JSONObject ansasd;
     /**
      * Constructor of the data retrieving object
-     * @param context   context used to retrieve the request queue instance and some variable that
-     *                  cannot be exposed on the internet :)
+     *
+     * @param context context used to retrieve the request queue instance and some variable that
+     *                cannot be exposed on the internet :)
      */
     public DotaDataRequest(Context context) {
         this.mContext = context;
@@ -44,8 +44,7 @@ public class DotaDataRequest implements DotaInterface {
         this.mSteamAPIKey = mContext.getString(R.string.local_steam_api_key);
     }
 
-    @Override
-    public void getMatchHistory() {
+    public void getMatchHistory(final VolleyCallback volleyCallback) {
         Uri builtURI = Uri.parse(BASE_URL)
                 .buildUpon()
                 .appendPath(MATCH_HISTORY_PATH)
@@ -54,11 +53,10 @@ public class DotaDataRequest implements DotaInterface {
                 .appendQueryParameter("account_id", mSteamUserID)
                 .build();
 
-        forwardRequest(builtURI);
+        forwardRequest(builtURI, volleyCallback);
     }
 
-    @Override
-    public void getMatchDetails(String matchID) {
+    public void getMatchDetails(String matchID, final VolleyCallback volleyCallback) {
         Uri builtURI = Uri.parse(BASE_URL)
                 .buildUpon()
                 .appendPath(MATCH_DETAILS_PATH)
@@ -67,54 +65,44 @@ public class DotaDataRequest implements DotaInterface {
                 .appendQueryParameter("match_id", matchID)
                 .build();
 
-        forwardRequest(builtURI);
+        forwardRequest(builtURI, volleyCallback);
     }
 
-    @Override
     public void getMatchHistoryBySequenceNumber() {
 
     }
 
-    @Override
     public void getLeagueListing() {
 
     }
 
-    @Override
     public void getLiveLeagueGames() {
 
     }
 
-    @Override
     public void getTeamInfoByTeamID() {
 
     }
 
-    @Override
     public void getPlayerSummaries() {
 
     }
 
-    @Override
     public void getGameItems() {
 
     }
 
-    @Override
     public void getHeroes() {
 
     }
 
-    private void forwardRequest(Uri uri) {
+    private void forwardRequest(Uri uri, final VolleyCallback volleyCallback) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(uri.toString(),null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
-                            Log.d("RESPONSE", response.toString(3));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        Log.d(TAG, "JSONObject retrieved with no error");
+                        volleyCallback.onSuccessResponse(response);
                     }
                 },
                 new Response.ErrorListener() {
