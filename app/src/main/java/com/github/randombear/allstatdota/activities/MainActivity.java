@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.github.randombear.allstatdota.R;
+import com.github.randombear.allstatdota.dataaccessobject.entities.MatchHistory;
 import com.github.randombear.allstatdota.dataaccessobject.interfaces.VolleyCallback;
 import com.github.randombear.allstatdota.dataaccessobject.remote.DotaDataRequest;
 
@@ -23,12 +24,13 @@ public class MainActivity extends AppCompatActivity {
         dotaDataRequest.getMatchHistory(new VolleyCallback() {
             @Override
             public void onSuccessResponse(JSONObject result) {
-                JSONObject matchHistory = result;
-                TextView tv = (TextView) findViewById(R.id.textView);
-                tv.setText(matchHistory.toString());
+                    MatchHistory matchHistory = MatchHistory.createFromJSON(result);
+                    TextView textView = (TextView) findViewById(R.id.textView);
+                    textView.setText(matchHistory.toString());
+                }
             }
-        });
-        
+        );
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

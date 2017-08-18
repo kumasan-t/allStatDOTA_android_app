@@ -8,7 +8,7 @@ package com.github.randombear.allstatdota.dataaccessobject.entities;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class DotaPlayer {
+public class PlayerDetails {
 
     private long accountId;
     private int playerSlot;
@@ -273,50 +273,50 @@ public class DotaPlayer {
         this.scaledHeroHealing = scaledHeroHealing;
     }
 
-    public static DotaPlayer createFromJSON(JSONObject jsonObject) {
-        DotaPlayer dotaPlayer = new DotaPlayer();
+    public static PlayerDetails createFromJSON(JSONObject jsonObject) {
+        PlayerDetails playerDetails = new PlayerDetails();
         try {
 
             //Issue here: anonymous player ID is 64bit while known player ID is 32bit. Naive solution
             //here was cast every id to a 64 bit ID.
-            dotaPlayer.setAccountId(Long.valueOf((Integer) jsonObject.get("account_id")));
-            dotaPlayer.setPlayerSlot((int) jsonObject.get("player_slot"));
+            playerDetails.setAccountId(Long.valueOf((Integer) jsonObject.get("account_id")));
+            playerDetails.setPlayerSlot((int) jsonObject.get("player_slot"));
 
-            dotaPlayer.setHeroId((int) jsonObject.get("hero_id"));
+            playerDetails.setHeroId((int) jsonObject.get("hero_id"));
 
-            dotaPlayer.setItem0((int) jsonObject.get("item_0"));
-            dotaPlayer.setItem1((int) jsonObject.get("item_1"));
-            dotaPlayer.setItem2((int) jsonObject.get("item_2"));
-            dotaPlayer.setItem3((int) jsonObject.get("item_3"));
-            dotaPlayer.setItem4((int) jsonObject.get("item_4"));
-            dotaPlayer.setItem5((int) jsonObject.get("item_5"));
+            playerDetails.setItem0((int) jsonObject.get("item_0"));
+            playerDetails.setItem1((int) jsonObject.get("item_1"));
+            playerDetails.setItem2((int) jsonObject.get("item_2"));
+            playerDetails.setItem3((int) jsonObject.get("item_3"));
+            playerDetails.setItem4((int) jsonObject.get("item_4"));
+            playerDetails.setItem5((int) jsonObject.get("item_5"));
 
-            dotaPlayer.setBackpack0((int) jsonObject.get("backpack_0"));
-            dotaPlayer.setBackpack1((int) jsonObject.get("backpack_1"));
-            dotaPlayer.setBackpack2((int) jsonObject.get("backpack_2"));
+            playerDetails.setBackpack0((int) jsonObject.get("backpack_0"));
+            playerDetails.setBackpack1((int) jsonObject.get("backpack_1"));
+            playerDetails.setBackpack2((int) jsonObject.get("backpack_2"));
 
-            dotaPlayer.setKills((int) jsonObject.get("kills"));
-            dotaPlayer.setDeaths((int) jsonObject.get("deaths"));
-            dotaPlayer.setAssists((int) jsonObject.get("assists"));
-            dotaPlayer.setLeaverStatus((int) jsonObject.get("leaver_status"));
-            dotaPlayer.setLastHits((int) jsonObject.get("last_hits"));
-            dotaPlayer.setDenies((int) jsonObject.get("denies"));
+            playerDetails.setKills((int) jsonObject.get("kills"));
+            playerDetails.setDeaths((int) jsonObject.get("deaths"));
+            playerDetails.setAssists((int) jsonObject.get("assists"));
+            playerDetails.setLeaverStatus((int) jsonObject.get("leaver_status"));
+            playerDetails.setLastHits((int) jsonObject.get("last_hits"));
+            playerDetails.setDenies((int) jsonObject.get("denies"));
 
-            dotaPlayer.setGoldPerMin((int) jsonObject.get("gold_per_min"));
-            dotaPlayer.setXpPerMin((int) jsonObject.get("xp_per_min"));
-            dotaPlayer.setLevel((int) jsonObject.get("level"));
-            dotaPlayer.setHeroDamage((int) jsonObject.get("hero_damage"));
-            dotaPlayer.setTowerDamage((int) jsonObject.get("tower_damage"));
-            dotaPlayer.setHeroHealing((int) jsonObject.get("hero_healing"));
-            dotaPlayer.setGold((int) jsonObject.get("gold"));
-            dotaPlayer.setGoldSpent((int) jsonObject.get("gold_spent"));
-            dotaPlayer.setScaledHeroDamage((int) jsonObject.get("scaled_hero_damage"));
-            dotaPlayer.setScaledTowerDamage((int) jsonObject.get("scaled_tower_damage"));
-            dotaPlayer.setScaledHeroHealing((int) jsonObject.get("scaled_hero_healing"));
+            playerDetails.setGoldPerMin((int) jsonObject.get("gold_per_min"));
+            playerDetails.setXpPerMin((int) jsonObject.get("xp_per_min"));
+            playerDetails.setLevel((int) jsonObject.get("level"));
+            playerDetails.setHeroDamage((int) jsonObject.get("hero_damage"));
+            playerDetails.setTowerDamage((int) jsonObject.get("tower_damage"));
+            playerDetails.setHeroHealing((int) jsonObject.get("hero_healing"));
+            playerDetails.setGold((int) jsonObject.get("gold"));
+            playerDetails.setGoldSpent((int) jsonObject.get("gold_spent"));
+            playerDetails.setScaledHeroDamage((int) jsonObject.get("scaled_hero_damage"));
+            playerDetails.setScaledTowerDamage((int) jsonObject.get("scaled_tower_damage"));
+            playerDetails.setScaledHeroHealing((int) jsonObject.get("scaled_hero_healing"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return dotaPlayer;
+        return playerDetails;
     }
 
 }
