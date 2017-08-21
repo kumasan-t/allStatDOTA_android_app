@@ -273,46 +273,81 @@ public class PlayerDetails {
         this.scaledHeroHealing = scaledHeroHealing;
     }
 
+    @Override
+    public String toString() {
+        return "PlayerDetails{" +
+                "accountId=" + accountId +
+                ", playerSlot=" + playerSlot +
+                ", heroId=" + heroId +
+                ", item0=" + item0 +
+                ", item1=" + item1 +
+                ", item2=" + item2 +
+                ", item3=" + item3 +
+                ", item4=" + item4 +
+                ", item5=" + item5 +
+                ", backpack0=" + backpack0 +
+                ", backpack1=" + backpack1 +
+                ", backpack2=" + backpack2 +
+                ", kills=" + kills +
+                ", deaths=" + deaths +
+                ", assists=" + assists +
+                ", leaverStatus=" + leaverStatus +
+                ", lastHits=" + lastHits +
+                ", denies=" + denies +
+                ", goldPerMin=" + goldPerMin +
+                ", xpPerMin=" + xpPerMin +
+                ", level=" + level +
+                ", heroDamage=" + heroDamage +
+                ", towerDamage=" + towerDamage +
+                ", heroHealing=" + heroHealing +
+                ", gold=" + gold +
+                ", goldSpent=" + goldSpent +
+                ", scaledHeroDamage=" + scaledHeroDamage +
+                ", scaledTowerDamage=" + scaledTowerDamage +
+                ", scaledHeroHealing=" + scaledHeroHealing +
+                '}';
+    }
+
     public static PlayerDetails createFromJSON(JSONObject jsonObject) {
         PlayerDetails playerDetails = new PlayerDetails();
         try {
 
             //Issue here: anonymous player ID is 64bit while known player ID is 32bit. Naive solution
             //here was cast every id to a 64 bit ID.
-            playerDetails.setAccountId(Long.valueOf((Integer) jsonObject.get("account_id")));
-            playerDetails.setPlayerSlot((int) jsonObject.get("player_slot"));
+            playerDetails.setAccountId(jsonObject.getLong("account_id"));
+            playerDetails.setPlayerSlot(jsonObject.getInt("player_slot"));
 
-            playerDetails.setHeroId((int) jsonObject.get("hero_id"));
+            playerDetails.setHeroId( jsonObject.getInt("hero_id"));
 
-            playerDetails.setItem0((int) jsonObject.get("item_0"));
-            playerDetails.setItem1((int) jsonObject.get("item_1"));
-            playerDetails.setItem2((int) jsonObject.get("item_2"));
-            playerDetails.setItem3((int) jsonObject.get("item_3"));
-            playerDetails.setItem4((int) jsonObject.get("item_4"));
-            playerDetails.setItem5((int) jsonObject.get("item_5"));
+            playerDetails.setItem0( jsonObject.getInt("item_0"));
+            playerDetails.setItem1( jsonObject.getInt("item_1"));
+            playerDetails.setItem2( jsonObject.getInt("item_2"));
+            playerDetails.setItem3( jsonObject.getInt("item_3"));
+            playerDetails.setItem4( jsonObject.getInt("item_4"));
+            playerDetails.setItem5( jsonObject.getInt("item_5"));
 
-            playerDetails.setBackpack0((int) jsonObject.get("backpack_0"));
-            playerDetails.setBackpack1((int) jsonObject.get("backpack_1"));
-            playerDetails.setBackpack2((int) jsonObject.get("backpack_2"));
+            playerDetails.setBackpack0( jsonObject.getInt("backpack_0"));
+            playerDetails.setBackpack1( jsonObject.getInt("backpack_1"));
+            playerDetails.setBackpack2( jsonObject.getInt("backpack_2"));
 
-            playerDetails.setKills((int) jsonObject.get("kills"));
-            playerDetails.setDeaths((int) jsonObject.get("deaths"));
-            playerDetails.setAssists((int) jsonObject.get("assists"));
-            playerDetails.setLeaverStatus((int) jsonObject.get("leaver_status"));
-            playerDetails.setLastHits((int) jsonObject.get("last_hits"));
-            playerDetails.setDenies((int) jsonObject.get("denies"));
+            playerDetails.setKills( jsonObject.getInt("kills"));
+            playerDetails.setDeaths( jsonObject.getInt("deaths"));
+            playerDetails.setAssists( jsonObject.getInt("assists"));
+            playerDetails.setLeaverStatus( jsonObject.getInt("leaver_status"));
+            playerDetails.setLastHits( jsonObject.getInt("last_hits"));
+            playerDetails.setDenies( jsonObject.getInt("denies"));
 
-            playerDetails.setGoldPerMin((int) jsonObject.get("gold_per_min"));
-            playerDetails.setXpPerMin((int) jsonObject.get("xp_per_min"));
-            playerDetails.setLevel((int) jsonObject.get("level"));
-            playerDetails.setHeroDamage((int) jsonObject.get("hero_damage"));
-            playerDetails.setTowerDamage((int) jsonObject.get("tower_damage"));
-            playerDetails.setHeroHealing((int) jsonObject.get("hero_healing"));
-            playerDetails.setGold((int) jsonObject.get("gold"));
-            playerDetails.setGoldSpent((int) jsonObject.get("gold_spent"));
-            playerDetails.setScaledHeroDamage((int) jsonObject.get("scaled_hero_damage"));
-            playerDetails.setScaledTowerDamage((int) jsonObject.get("scaled_tower_damage"));
-            playerDetails.setScaledHeroHealing((int) jsonObject.get("scaled_hero_healing"));
+            playerDetails.setGoldPerMin( jsonObject.getInt("gold_per_min"));
+            playerDetails.setXpPerMin( jsonObject.getInt("xp_per_min"));
+            playerDetails.setLevel( jsonObject.getInt("level"));
+            playerDetails.setHeroDamage( jsonObject.getInt("hero_damage"));
+            playerDetails.setTowerDamage( jsonObject.getInt("tower_damage"));
+            playerDetails.setHeroHealing( jsonObject.getInt("hero_healing"));
+            playerDetails.setGold( jsonObject.getInt("gold"));
+            playerDetails.setGoldSpent( jsonObject.getInt("gold_spent"));
+            playerDetails.setScaledHeroDamage( jsonObject.getInt("scaled_hero_damage"));
+            playerDetails.setScaledTowerDamage( jsonObject.getInt("scaled_tower_damage"));
+            playerDetails.setScaledHeroHealing( jsonObject.getInt("scaled_hero_healing"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
