@@ -31,4 +31,12 @@ public final class StatContract {
         public static final String COLUMN_NAME_DIRE_TEAM_ID = "dire_team_id";
         public static final String COLUMN_NAME_MATCH_HISTORY = "match_history_id";
     }
+
+    public static class PlayerEntry implements BaseColumns {
+        public static final String TABLE_NAME = "player";
+        public static final String COLUMN_NAME_ACCOUNT_ID = "account_id";
+        public static final String COLUMN_NAME_PLAYER_SLOT = "player_slot";
+        public static final String COLUMN_NAME_HERO_ID = "hero_id";
+        public static final String COLUMN_NAME_MATCH = "match";
+    }
 }
