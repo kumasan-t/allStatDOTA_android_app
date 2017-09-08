@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.PlayerEntry;
 import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.MatchEntry;
 import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.MatchHistoryEntry;
 
@@ -42,22 +43,36 @@ public class StatDbHelper extends SQLiteOpenHelper {
             " FOREIGN KEY (" + MatchEntry.COLUMN_NAME_MATCH_HISTORY + ") REFERENCES  (" +
             MatchHistoryEntry._ID + "));";
 
+    public static final String SQL_CREATE_TABLE_PLAYER = "" +
+            "CREATE TABLE" + PlayerEntry.TABLE_NAME + "(" +
+            PlayerEntry.COLUMN_NAME_ACCOUNT_ID + "INTEGER PRIMARY KEY," +
+            PlayerEntry.COLUMN_NAME_PLAYER_SLOT + "INTEGER," +
+            PlayerEntry.COLUMN_NAME_HERO_ID + "INTEGER," +
+            PlayerEntry.COLUMN_NAME_MATCH + "INTEGER," +
+            " FOREIGN KEY (" + PlayerEntry.COLUMN_NAME_MATCH + ") REFERENCES (" +
+            MatchEntry.COLUMN_NAME_MATCH_ID + "));";
+
     private static final String SQL_DELETE_MATCH_HISTORY =
             "DROP TABLE IF EXISTS " + MatchHistoryEntry.TABLE_NAME;
 
     private static final String SQL_DELETE_MATCH =
             "DROP TABLE IF EXISTS " + MatchEntry.TABLE_NAME;
 
+    private static final String SQL_DELETE_PLAYER =
+            "DROP TABLE IF EXISTS " + PlayerEntry.TABLE_NAME;
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_TABLE_MATCH_HISTORY);
         db.execSQL(SQL_CREATE_TABLE_MATCHES);
+        db.execSQL(SQL_CREATE_TABLE_PLAYER);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL(SQL_DELETE_MATCH);
         db.execSQL(SQL_DELETE_MATCH_HISTORY);
+        db.execSQL(SQL_DELETE_PLAYER);
         onCreate(db);
     }
 }
