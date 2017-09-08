@@ -40,7 +40,7 @@ public class DotaDataRequest {
      */
     public DotaDataRequest(Context context) {
         this.mContext = context;
-        this.mSteamUserID = mContext.getString(R.string.local_steam_user_id);
+        this.mSteamUserID = mContext.getString(R.string.local_steam_user_id_32_bit);
         this.mSteamAPIKey = mContext.getString(R.string.local_steam_api_key);
     }
 
