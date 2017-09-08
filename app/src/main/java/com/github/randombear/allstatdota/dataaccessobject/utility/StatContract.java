@@ -24,7 +24,7 @@ public final class StatContract {
     public static class MatchEntry  implements BaseColumns {
         public static final String TABLE_NAME = "match";
         public static final String COLUMN_NAME_MATCH_ID = "match_id";
-        public static final String COLUMN_NAME_MATCH_SEQ_NUM = "match_se_num";
+        public static final String COLUMN_NAME_MATCH_SEQ_NUM = "match_seq_num";
         public static final String COLUMN_NAME_START_TIME = "start_time";
         public static final String COLUMN_NAME_LOBBY_TYPE = "lobby_type";
         public static final String COLUMN_NAME_RADIANT_TEAM_ID = "radiant_team_id";
