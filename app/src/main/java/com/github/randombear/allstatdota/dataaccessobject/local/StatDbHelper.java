@@ -45,10 +45,13 @@ public class StatDbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_TABLE_PLAYER = "" +
             "CREATE TABLE " + PlayerEntry.TABLE_NAME + " (" +
-            PlayerEntry.COLUMN_NAME_ACCOUNT_ID + " INTEGER PRIMARY KEY," +
+            PlayerEntry.COLUMN_NAME_ACCOUNT_ID + " INTEGER," +
             PlayerEntry.COLUMN_NAME_PLAYER_SLOT + " INTEGER," +
             PlayerEntry.COLUMN_NAME_HERO_ID + " INTEGER," +
             PlayerEntry.COLUMN_NAME_MATCH + " INTEGER," +
+            " PRIMARY KEY (" +
+            PlayerEntry.COLUMN_NAME_ACCOUNT_ID + "," +
+            PlayerEntry.COLUMN_NAME_MATCH + "), " +
             " FOREIGN KEY (" + PlayerEntry.COLUMN_NAME_MATCH + ") REFERENCES " +
             MatchEntry.TABLE_NAME + "(" + MatchEntry.COLUMN_NAME_MATCH_ID + "));";
 
