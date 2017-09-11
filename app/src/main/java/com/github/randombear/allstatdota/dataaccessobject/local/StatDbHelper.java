@@ -1,9 +1,13 @@
 package com.github.randombear.allstatdota.dataaccessobject.local;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.github.randombear.allstatdota.dataaccessobject.entities.Match;
+import com.github.randombear.allstatdota.dataaccessobject.entities.MatchHistory;
+import com.github.randombear.allstatdota.dataaccessobject.entities.Player;
 import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.PlayerEntry;
 import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.MatchEntry;
 import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.MatchHistoryEntry;
@@ -77,5 +81,47 @@ public class StatDbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_DELETE_MATCH_HISTORY);
         db.execSQL(SQL_DELETE_PLAYER);
         onCreate(db);
+    }
+
+    public int populateDatabase(MatchHistory matchHistory) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        int insertionCounter = 0;
+
+        values.put(MatchHistoryEntry._ID, matchHistory.hashCode());
+        values.put(MatchHistoryEntry.COLUMN_NAME_STATUS, matchHistory.getStatus());
+        values.put(MatchHistoryEntry.COLUMN_NAME_NUM_RESULTS, matchHistory.getNumResults());
+        values.put(MatchHistoryEntry.COLUMN_NAME_TOTAL_RESULTS, matchHistory.getTotalResults());
+        values.put(MatchHistoryEntry.COLUMN_NAME_RESULTS_REMAINING, matchHistory.getResultsRemaining());
+        db.insert(MatchHistoryEntry.TABLE_NAME, null, values);
+        insertionCounter++;
+        values.clear();
+        for (Match e : matchHistory.getMatches()) {
+            values.put(MatchEntry.COLUMN_NAME_MATCH_ID, e.getMatchId());
+            values.put(MatchEntry.COLUMN_NAME_MATCH_SEQ_NUM, e.getMatchSeqNum());
+            values.put(MatchEntry.COLUMN_NAME_START_TIME, e.getStartTime());
+            values.put(MatchEntry.COLUMN_NAME_LOBBY_TYPE, e.getLobbyType());
+            values.put(MatchEntry.COLUMN_NAME_RADIANT_TEAM_ID, e.getRadiantTeamId());
+            values.put(MatchEntry.COLUMN_NAME_DIRE_TEAM_ID, e.getDireTeamId());
+            values.put(MatchEntry.COLUMN_NAME_MATCH_HISTORY, matchHistory.hashCode());
+            db.insert(MatchEntry.TABLE_NAME, null, values);
+            insertionCounter++;
+            values.clear();
+            for (Player p : e.getPlayers()) {
+                if (p.getAccountId() == 4294967295l) { continue; }
+                values.put(PlayerEntry.COLUMN_NAME_ACCOUNT_ID, p.getAccountId());
+                values.put(PlayerEntry.COLUMN_NAME_PLAYER_SLOT, p.getPlayerSlot());
+                values.put(PlayerEntry.COLUMN_NAME_HERO_ID, p.getHeroId());
+                values.put(PlayerEntry.COLUMN_NAME_MATCH, e.getMatchId());
+                db.insert(PlayerEntry.TABLE_NAME, null, values);
+                values.clear();
+                insertionCounter++;
+            }
+        }
+        return insertionCounter;
+    }
+
+    public void deleteDatabase(Context context) {
+        context.deleteDatabase("dotaStat.db");
     }
 }
