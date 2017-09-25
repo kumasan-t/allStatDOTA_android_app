@@ -2,6 +2,7 @@ package com.github.randombear.allstatdota.dataaccessobject.local;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -11,6 +12,8 @@ import com.github.randombear.allstatdota.dataaccessobject.entities.Player;
 import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.PlayerEntry;
 import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.MatchEntry;
 import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.MatchHistoryEntry;
+
+import java.util.ArrayList;
 
 /**
  * =================================
@@ -119,6 +122,76 @@ public class StatDbHelper extends SQLiteOpenHelper {
             }
         }
         return insertionCounter;
+    }
+
+    public MatchHistory readMatchHistoryFromDatabase() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM match, player " +
+                        "WHERE " +
+                        "match_id = match " +
+                        "ORDER BY match_seq_num DESC",
+                null);
+        ArrayList<Match> matches = new ArrayList<>();
+        long matchID = 0;
+        while(cursor.moveToNext()) {
+            long matchIDtemp = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(MatchEntry.COLUMN_NAME_MATCH_ID));
+            if (matchID != matchIDtemp) {
+                Match matchTemp = new Match();
+                matchID = matchIDtemp;
+                matchTemp.setMatchId(matchIDtemp);
+                matchTemp.setMatchSeqNum(cursor.getLong(
+                        cursor.getColumnIndexOrThrow(MatchEntry.COLUMN_NAME_MATCH_SEQ_NUM)
+                ));
+                matchTemp.setStartTime(cursor.getInt(
+                        cursor.getColumnIndexOrThrow(MatchEntry.COLUMN_NAME_START_TIME)
+                ));
+                matchTemp.setLobbyType(cursor.getInt(
+                        cursor.getColumnIndexOrThrow(MatchEntry.COLUMN_NAME_LOBBY_TYPE)
+                ));
+                matchTemp.setRadiantTeamId(cursor.getInt(
+                        cursor.getColumnIndexOrThrow(MatchEntry.COLUMN_NAME_RADIANT_TEAM_ID)
+                ));
+                matchTemp.setDireTeamId(cursor.getInt(
+                        cursor.getColumnIndexOrThrow(MatchEntry.COLUMN_NAME_DIRE_TEAM_ID)
+                ));
+                matchTemp.setPlayers(new ArrayList<Player>());
+                matches.add(matchTemp);
+            }
+            Player player = new Player();
+            player.setAccountId(cursor.getLong(
+                    cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_NAME_ACCOUNT_ID)
+            ));
+            player.setPlayerSlot(cursor.getInt(
+                    cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_NAME_PLAYER_SLOT)
+            ));
+            player.setHeroId(cursor.getInt(
+                    cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_NAME_HERO_ID)
+            ));
+            matches.get(matches.size()-1).getPlayers().add(player);
+        }
+        cursor.close();
+
+        cursor = db.rawQuery("SELECT * FROM match_history", null);
+
+        MatchHistory matchHistory = new MatchHistory();
+        cursor.moveToNext();
+        matchHistory.setStatus(cursor.getInt(
+                cursor.getColumnIndexOrThrow(MatchHistoryEntry.COLUMN_NAME_STATUS)
+        ));
+        matchHistory.setNumResults(cursor.getInt(
+                cursor.getColumnIndexOrThrow(MatchHistoryEntry.COLUMN_NAME_NUM_RESULTS)
+        ));
+        matchHistory.setResultsRemaining(cursor.getInt(
+                cursor.getColumnIndexOrThrow(MatchHistoryEntry.COLUMN_NAME_RESULTS_REMAINING)
+        ));
+        matchHistory.setTotalResults(cursor.getInt(
+                cursor.getColumnIndexOrThrow(MatchHistoryEntry.COLUMN_NAME_TOTAL_RESULTS)
+        ));
+        matchHistory.setMatches(matches);
+        cursor.close();
+        return matchHistory;
+
     }
 
     public void deleteDatabase(Context context) {
