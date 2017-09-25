@@ -86,6 +86,12 @@ public class StatDbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * Create a database from scratch containing all the information stored in a MatchHistory
+     * object.
+     * @param matchHistory          Object containing Matches and Players information.
+     * @return                      Number of insertions.
+     */
     public int populateDatabase(MatchHistory matchHistory) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -124,6 +130,10 @@ public class StatDbHelper extends SQLiteOpenHelper {
         return insertionCounter;
     }
 
+    /**
+     * Read from DB all the information about the matches stored.
+     * @return          Returns a MatchHistory object and all its associated matches and players.
+     */
     public MatchHistory readMatchHistoryFromDatabase() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM match, player " +
