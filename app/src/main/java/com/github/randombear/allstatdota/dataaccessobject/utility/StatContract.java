@@ -63,7 +63,9 @@ public final class StatContract {
     }
 
     public static class PlayerDetailsEntry implements BaseColumns {
+        public static final String TABLE_NAME = "player_details";
         public static final String COLUMN_NAME_ACCOUNT_ID = "account_id";
+        public static final String COLUMN_NAME_MATCH_ID = "match_id";
         public static final String COLUMN_NAME_PLAYER_SLOT = "player_slot";
         public static final String COLUMN_NAME_HERO_ID = "hero_id";
         public static final String COLUMN_NAME_ITEM_0 = "item_0";

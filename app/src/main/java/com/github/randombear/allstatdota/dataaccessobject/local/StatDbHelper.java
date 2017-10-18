@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.github.randombear.allstatdota.dataaccessobject.entities.Match;
 import com.github.randombear.allstatdota.dataaccessobject.entities.MatchHistory;
 import com.github.randombear.allstatdota.dataaccessobject.entities.Player;
+import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.PlayerDetailsEntry;
+import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.MatchDetailsEntry;
 import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.PlayerEntry;
 import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.MatchEntry;
 import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.MatchHistoryEntry;
@@ -62,6 +64,64 @@ public class StatDbHelper extends SQLiteOpenHelper {
             " FOREIGN KEY (" + PlayerEntry.COLUMN_NAME_MATCH + ") REFERENCES " +
             MatchEntry.TABLE_NAME + "(" + MatchEntry.COLUMN_NAME_MATCH_ID + "));";
 
+    private static final String SQL_CREATE_TABLE_MATCH_DETAILS = "" +
+            "CREATE TABLE " + MatchDetailsEntry.TABLE_NAME + " (" +
+            MatchDetailsEntry.COLUMN_NAME_MATCH_ID + " INTEGER PRIMARY KEY," +
+            MatchDetailsEntry.COLUMN_NAME_MATCH_SEQ_NUM + " INTEGER," +
+            MatchDetailsEntry.COLUMN_NAME_DURATION + " INTEGER," +
+            MatchDetailsEntry.COLUMN_NAME_PRE_GAME_DURATION + " INTEGER," +
+            MatchDetailsEntry.COLUMN_NAME_START_TIME + " INTEGER," +
+            MatchDetailsEntry.COLUMN_NAME_TOWER_STATUS_DIRE + " INTEGER," +
+            MatchDetailsEntry.COLUMN_NAME_TOWER_STATUS_RADIANT + " INTEGER," +
+            MatchDetailsEntry.COLUMN_NAME_BARRACKS_STATUS_RADIANT + " INTEGER," +
+            MatchDetailsEntry.COLUMN_NAME_BARRACKS_STATUS_DIRE + " INTEGER," +
+            MatchDetailsEntry.COLUMN_NAME_CLUSTER + " INTEGER," +
+            MatchDetailsEntry.COLUMN_NAME_FIRST_BLOOD_TIME + " INTEGER," +
+            MatchDetailsEntry.COLUMN_NAME_LOBBY_TYPE + " INTEGER," +
+            MatchDetailsEntry.COLUMN_NAME_HUMAN_PLAYERS + " INTEGER," +
+            MatchDetailsEntry.COLUMN_NAME_LEAGUE_ID + " INTEGER," +
+            MatchDetailsEntry.COLUMN_NAME_GAME_MODE + " INTEGER," +
+            MatchDetailsEntry.COLUMN_NAME_FLAGS + " INTEGER," +
+            MatchDetailsEntry.COLUMN_NAME_RADIANT_SCORE + " INTEGER," +
+            MatchDetailsEntry.COLUMN_NAME_DIRE_SCORE + " INTEGER," +
+            " FOREIGN KEY (" + MatchDetailsEntry.COLUMN_NAME_MATCH_ID + ") REFERENCES " +
+            MatchEntry.TABLE_NAME + "(" + MatchEntry.COLUMN_NAME_MATCH_ID + "));";
+
+    private static final String SQL_CREATE_TABLE_PLAYER_DETAILS = "" +
+            "CREATE TABLE " + PlayerDetailsEntry.TABLE_NAME + " (" +
+            PlayerDetailsEntry.COLUMN_NAME_ACCOUNT_ID + " INTEGER PRIMARY KEY," +
+            PlayerDetailsEntry.COLUMN_NAME_MATCH_ID + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_PLAYER_SLOT + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_HERO_ID + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_ITEM_0 + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_ITEM_1 + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_ITEM_2 + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_ITEM_3 + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_ITEM_4 + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_ITEM_5 + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_BACKPACK_0 + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_BACKPACK_1 + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_BACKPACK_2 + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_KILLS + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_DEATHS + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_ASSISTS + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_LEAVER_STATUS + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_LAST_HITS + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_DENIES + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_GOLD_PER_MIN + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_XP_PER_MIN + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_LEVEL + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_HERO_DAMAGE + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_TOWER_DAMAGE + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_HERO_HEALING + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_GOLD + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_GOLD_SPENT + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_SCALED_HERO_DAMAGE + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_SCALED_TOWER_DAMAGE + " INTEGER," +
+            PlayerDetailsEntry.COLUMN_NAME_SCALED_HERO_HEALING + " INTEGER," +
+            " FOREIGN KEY (" + PlayerDetailsEntry.COLUMN_NAME_MATCH_ID + ") REFERENCES " +
+            MatchDetailsEntry.TABLE_NAME + "(" + MatchDetailsEntry.COLUMN_NAME_MATCH_ID + "));";
+
     private static final String SQL_DELETE_MATCH_HISTORY =
             "DROP TABLE IF EXISTS " + MatchHistoryEntry.TABLE_NAME;
 
@@ -71,11 +131,16 @@ public class StatDbHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_PLAYER =
             "DROP TABLE IF EXISTS " + PlayerEntry.TABLE_NAME;
 
+    private static final String SQL_DELETE_MATCH_DETAILS =
+            "DROP TABLE IF EXISTS " + MatchDetailsEntry.TABLE_NAME;
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_TABLE_MATCH_HISTORY);
         db.execSQL(SQL_CREATE_TABLE_MATCHES);
         db.execSQL(SQL_CREATE_TABLE_PLAYER);
+        db.execSQL(SQL_CREATE_TABLE_MATCH_DETAILS);
+        db.execSQL(SQL_CREATE_TABLE_PLAYER_DETAILS);
     }
 
     @Override
@@ -83,6 +148,7 @@ public class StatDbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_DELETE_MATCH);
         db.execSQL(SQL_DELETE_MATCH_HISTORY);
         db.execSQL(SQL_DELETE_PLAYER);
+        db.execSQL(SQL_DELETE_MATCH_DETAILS);
         onCreate(db);
     }
 
