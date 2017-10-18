@@ -1,18 +1,30 @@
 package com.github.randombear.allstatdota.activities;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.github.randombear.allstatdota.R;
 import com.github.randombear.allstatdota.adapter.MatchAdapter;
 import com.github.randombear.allstatdota.dataaccessobject.entities.MatchHistory;
+import com.github.randombear.allstatdota.dataaccessobject.interfaces.VolleyCallback;
 import com.github.randombear.allstatdota.dataaccessobject.local.StatDbHelper;
+import com.github.randombear.allstatdota.dataaccessobject.remote.DotaDataRequest;
+
+import org.json.JSONObject;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "Main Activity";
+
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -21,13 +33,67 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mRecyclerView = (RecyclerView) findViewById(R.id.content_main_recyclerView);
 
+        mRecyclerView = (RecyclerView) findViewById(R.id.content_main_recyclerView);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.content_main_swiperefresh);
         //Using a Linear Layout Manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        DatabaseReadTask databaseReadTask = new DatabaseReadTask();
-        databaseReadTask.execute();
+
+        if (doesDatabaseExist(getBaseContext(),"dotaStat.db")) {
+            Log.i(TAG,"Database exists at" + getBaseContext()
+                    .getDatabasePath("dotaStat.db"));
+            AsyncTask<Void,Void,MatchHistory> dbReadTask = new DatabaseReadTask();
+            dbReadTask.execute();
+        } else {
+            Log.i(TAG,"Database doesn't exists");
+            DotaDataRequest dataRequest = new DotaDataRequest(getBaseContext());
+            dataRequest.getMatchHistory(new VolleyCallback() {
+                @Override
+                public void onSuccessResponse(JSONObject result) {
+                    refreshAndUpdate(result);
+                }
+            });
+        }
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                DotaDataRequest dataRequest = new DotaDataRequest(getBaseContext());
+                getBaseContext().deleteDatabase("dotaStat.db");
+                dataRequest.getMatchHistory(new VolleyCallback() {
+                    @Override
+                    public void onSuccessResponse(JSONObject result) {
+                        refreshAndUpdate(result);
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * Helper function that creates a new MatchHistory object from the JSON, populates the
+     * database and prepares a new adapter to be filled with the new data.
+     * @param result
+     */
+    private void refreshAndUpdate(JSONObject result) {
+        MatchHistory matchHistory = MatchHistory.createFromJSON(result);
+        DatabasePopulateTask dbPopulate = new DatabasePopulateTask();
+        dbPopulate.execute(matchHistory);
+        mAdapter = new MatchAdapter(matchHistory,getBaseContext());
+        mRecyclerView.setAdapter(mAdapter);
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    /**
+     * Functions that tells whether the database file exists or not.
+     * @param context           Application context
+     * @param dbName            Database name.
+     * @return                  True if the file exists, False otherwise.
+     */
+    private static boolean doesDatabaseExist(Context context, String dbName) {
+        File dbFile = context.getDatabasePath(dbName);
+        return dbFile.exists();
     }
 
     private class DatabaseReadTask extends AsyncTask<Void,Void,MatchHistory> {
@@ -43,17 +109,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class DatabaseDeleteTask extends AsyncTask<Void,Void,Void> {
+    private class DatabasePopulateTask extends AsyncTask<MatchHistory,Void,MatchHistory> {
         @Override
-        protected Void doInBackground(Void... voids) {
-            getBaseContext().deleteDatabase("dotaStat.db");
-            return null;
-        }
-    }
-
-    private class DatabasePopulateTask extends AsyncTask<MatchHistory,Void,Void> {
-        @Override
-        protected Void doInBackground(MatchHistory... matchHistories) {
+        protected MatchHistory doInBackground(MatchHistory... matchHistories) {
             StatDbHelper dbHelper = new StatDbHelper(getBaseContext());
             for (MatchHistory m : matchHistories) {
                 dbHelper.populateDatabase(m);
