@@ -7,8 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.github.randombear.allstatdota.dataaccessobject.entities.Match;
+import com.github.randombear.allstatdota.dataaccessobject.entities.MatchDetails;
 import com.github.randombear.allstatdota.dataaccessobject.entities.MatchHistory;
 import com.github.randombear.allstatdota.dataaccessobject.entities.Player;
+import com.github.randombear.allstatdota.dataaccessobject.entities.PlayerDetails;
 import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.PlayerDetailsEntry;
 import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.MatchDetailsEntry;
 import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.PlayerEntry;
@@ -16,6 +18,7 @@ import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.M
 import com.github.randombear.allstatdota.dataaccessobject.utility.StatContract.MatchHistoryEntry;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * =================================
@@ -89,7 +92,7 @@ public class StatDbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_TABLE_PLAYER_DETAILS = "" +
             "CREATE TABLE " + PlayerDetailsEntry.TABLE_NAME + " (" +
-            PlayerDetailsEntry.COLUMN_NAME_ACCOUNT_ID + " INTEGER PRIMARY KEY," +
+            PlayerDetailsEntry.COLUMN_NAME_ACCOUNT_ID + " INTEGER," +
             PlayerDetailsEntry.COLUMN_NAME_MATCH_ID + " INTEGER," +
             PlayerDetailsEntry.COLUMN_NAME_PLAYER_SLOT + " INTEGER," +
             PlayerDetailsEntry.COLUMN_NAME_HERO_ID + " INTEGER," +
@@ -119,6 +122,10 @@ public class StatDbHelper extends SQLiteOpenHelper {
             PlayerDetailsEntry.COLUMN_NAME_SCALED_HERO_DAMAGE + " INTEGER," +
             PlayerDetailsEntry.COLUMN_NAME_SCALED_TOWER_DAMAGE + " INTEGER," +
             PlayerDetailsEntry.COLUMN_NAME_SCALED_HERO_HEALING + " INTEGER," +
+            " PRIMARY KEY (" +
+            PlayerDetailsEntry.COLUMN_NAME_ACCOUNT_ID + ", " +
+            PlayerDetailsEntry.COLUMN_NAME_HERO_ID + ",  " +
+            PlayerDetailsEntry.COLUMN_NAME_MATCH_ID + "), " +
             " FOREIGN KEY (" + PlayerDetailsEntry.COLUMN_NAME_MATCH_ID + ") REFERENCES " +
             MatchDetailsEntry.TABLE_NAME + "(" + MatchDetailsEntry.COLUMN_NAME_MATCH_ID + "));";
 
@@ -267,6 +274,73 @@ public class StatDbHelper extends SQLiteOpenHelper {
         matchHistory.setMatches(matches);
         cursor.close();
         return matchHistory;
+
+    }
+
+    public int putMatchDetails(List<MatchDetails> matchesDetails) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        int insertionCounter = 0;
+
+        for (MatchDetails matchDetails: matchesDetails) {
+            values.put(MatchDetailsEntry.COLUMN_NAME_MATCH_ID,matchDetails.getMatchId());
+            values.put(MatchDetailsEntry.COLUMN_NAME_DURATION,matchDetails.getDuration());
+            values.put(MatchDetailsEntry.COLUMN_NAME_START_TIME,matchDetails.getStartTime());
+            values.put(MatchDetailsEntry.COLUMN_NAME_MATCH_SEQ_NUM,matchDetails.getMatchSeqNum());
+            values.put(MatchDetailsEntry.COLUMN_NAME_PRE_GAME_DURATION,matchDetails.getPreGameDuration());
+            values.put(MatchDetailsEntry.COLUMN_NAME_TOWER_STATUS_DIRE,matchDetails.getTowerStatusDire());
+            values.put(MatchDetailsEntry.COLUMN_NAME_TOWER_STATUS_RADIANT,matchDetails.getTowerStatusRadiant());
+            values.put(MatchDetailsEntry.COLUMN_NAME_BARRACKS_STATUS_DIRE,matchDetails.getBarracksStatusDire());
+            values.put(MatchDetailsEntry.COLUMN_NAME_BARRACKS_STATUS_RADIANT,matchDetails.getBarracksStatusRadiant());
+            values.put(MatchDetailsEntry.COLUMN_NAME_CLUSTER,matchDetails.getCluster());
+            values.put(MatchDetailsEntry.COLUMN_NAME_FIRST_BLOOD_TIME,matchDetails.getFirstBloodTime());
+            values.put(MatchDetailsEntry.COLUMN_NAME_LOBBY_TYPE,matchDetails.getLobbyType());
+            values.put(MatchDetailsEntry.COLUMN_NAME_HUMAN_PLAYERS,matchDetails.getHumanPlayers());
+            values.put(MatchDetailsEntry.COLUMN_NAME_LEAGUE_ID,matchDetails.getLeagueid());
+            values.put(MatchDetailsEntry.COLUMN_NAME_GAME_MODE,matchDetails.getGameMode());
+            values.put(MatchDetailsEntry.COLUMN_NAME_FLAGS,matchDetails.getFlags());
+            values.put(MatchDetailsEntry.COLUMN_NAME_RADIANT_SCORE,matchDetails.getRadiantScore());
+            values.put(MatchDetailsEntry.COLUMN_NAME_DIRE_SCORE,matchDetails.getDireScore());
+            db.insert(MatchDetailsEntry.TABLE_NAME,null,values);
+            values.clear();
+            for (PlayerDetails p : matchDetails.getPlayers()) {
+                values.put(PlayerDetailsEntry.COLUMN_NAME_ACCOUNT_ID,p.getAccountId());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_MATCH_ID,matchDetails.getMatchId());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_PLAYER_SLOT,p.getPlayerSlot());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_HERO_ID,p.getHeroId());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_ITEM_0,p.getItem0());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_ITEM_1,p.getItem1());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_ITEM_2,p.getItem2());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_ITEM_3,p.getItem3());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_ITEM_4,p.getItem4());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_ITEM_5,p.getItem5());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_BACKPACK_0,p.getBackpack0());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_BACKPACK_1,p.getBackpack1());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_BACKPACK_2,p.getBackpack2());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_KILLS,p.getKills());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_DEATHS,p.getDeaths());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_ASSISTS,p.getAssists());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_LEAVER_STATUS,p.getLeaverStatus());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_LAST_HITS,p.getLastHits());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_DENIES,p.getDenies());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_GOLD_PER_MIN,p.getGoldPerMin());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_XP_PER_MIN,p.getXpPerMin());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_LEVEL,p.getLevel());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_HERO_DAMAGE,p.getHeroDamage());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_TOWER_DAMAGE,p.getTowerDamage());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_HERO_HEALING,p.getHeroHealing());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_GOLD,p.getGold());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_GOLD_SPENT,p.getGoldSpent());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_SCALED_HERO_DAMAGE,p.getScaledHeroDamage());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_SCALED_TOWER_DAMAGE,p.getScaledTowerDamage());
+                values.put(PlayerDetailsEntry.COLUMN_NAME_SCALED_HERO_HEALING,p.getScaledHeroHealing());
+                db.insert(PlayerDetailsEntry.TABLE_NAME,null,values);
+                values.clear();
+
+            }
+            insertionCounter++;
+        }
+        return insertionCounter;
 
     }
 
