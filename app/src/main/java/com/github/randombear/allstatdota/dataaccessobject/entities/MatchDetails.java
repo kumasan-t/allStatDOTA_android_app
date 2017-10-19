@@ -22,8 +22,8 @@ public class MatchDetails implements Parcelable {
     private int duration;
     private int preGameDuration;
     private int startTime;
-    private int matchId;
-    private int matchSeqNum;
+    private long matchId;
+    private long matchSeqNum;
     private int towerStatusRadiant;
     private int towerStatusDire;
     private int barracksStatusRadiant;
@@ -55,8 +55,8 @@ public class MatchDetails implements Parcelable {
             instance.duration = ((int) in.readValue((int.class.getClassLoader())));
             instance.preGameDuration = ((int) in.readValue((int.class.getClassLoader())));
             instance.startTime = ((int) in.readValue((int.class.getClassLoader())));
-            instance.matchId = ((int) in.readValue((int.class.getClassLoader())));
-            instance.matchSeqNum = ((int) in.readValue((int.class.getClassLoader())));
+            instance.matchId = ((long) in.readValue((long.class.getClassLoader())));
+            instance.matchSeqNum = ((long) in.readValue((long.class.getClassLoader())));
             instance.towerStatusRadiant = ((int) in.readValue((int.class.getClassLoader())));
             instance.towerStatusDire = ((int) in.readValue((int.class.getClassLoader())));
             instance.barracksStatusRadiant = ((int) in.readValue((int.class.getClassLoader())));
@@ -122,19 +122,19 @@ public class MatchDetails implements Parcelable {
         this.startTime = startTime;
     }
 
-    public int getMatchId() {
+    public long getMatchId() {
         return matchId;
     }
 
-    public void setMatchId(int matchId) {
+    public void setMatchId(long matchId) {
         this.matchId = matchId;
     }
 
-    public int getMatchSeqNum() {
+    public long getMatchSeqNum() {
         return matchSeqNum;
     }
 
-    public void setMatchSeqNum(int matchSeqNum) {
+    public void setMatchSeqNum(long matchSeqNum) {
         this.matchSeqNum = matchSeqNum;
     }
 
@@ -329,8 +329,8 @@ public class MatchDetails implements Parcelable {
             matchDetails.setDuration(jsonObject.getInt("duration"));
             matchDetails.setPreGameDuration(jsonObject.getInt("pre_game_duration"));
             matchDetails.setStartTime(jsonObject.getInt("start_time"));
-            matchDetails.setMatchId(jsonObject.getInt("match_id"));
-            matchDetails.setMatchSeqNum(jsonObject.getInt("match_seq_num"));
+            matchDetails.setMatchId(jsonObject.getLong("match_id"));
+            matchDetails.setMatchSeqNum(jsonObject.getLong("match_seq_num"));
             matchDetails.setFirstBloodTime(jsonObject.getInt("first_blood_time"));
             matchDetails.setLobbyType(jsonObject.getInt("lobby_type"));
             matchDetails.setHumanPlayers(jsonObject.getInt("human_players"));
