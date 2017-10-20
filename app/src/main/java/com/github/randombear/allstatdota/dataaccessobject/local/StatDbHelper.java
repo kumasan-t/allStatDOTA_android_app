@@ -371,142 +371,142 @@ public class StatDbHelper extends SQLiteOpenHelper {
                 matchTemp.setLobbyType(cursor.getInt(
                         cursor.getColumnIndexOrThrow(MatchDetailsEntry.COLUMN_NAME_LOBBY_TYPE)
                 ));
-                matchTemp.setDuration(
+                matchTemp.setDuration(cursor.getInt(
                         cursor.getColumnIndexOrThrow(MatchDetailsEntry.COLUMN_NAME_DURATION)
-                );
-                matchTemp.setPreGameDuration(
+                ));
+                matchTemp.setPreGameDuration(cursor.getInt(
                         cursor.getColumnIndexOrThrow(MatchDetailsEntry.COLUMN_NAME_PRE_GAME_DURATION
-                ));
-                matchTemp.setTowerStatusDire(
+                )));
+                matchTemp.setTowerStatusDire(cursor.getInt(
                         cursor.getColumnIndexOrThrow(MatchDetailsEntry.COLUMN_NAME_TOWER_STATUS_DIRE
-                ));
-                matchTemp.setTowerStatusRadiant(
+                )));
+                matchTemp.setTowerStatusRadiant(cursor.getInt(
                         cursor.getColumnIndexOrThrow(MatchDetailsEntry.COLUMN_NAME_TOWER_STATUS_RADIANT
-                ));
-                matchTemp.setBarracksStatusDire(
+                )));
+                matchTemp.setBarracksStatusDire(cursor.getInt(
                         cursor.getColumnIndexOrThrow(MatchDetailsEntry.COLUMN_NAME_BARRACKS_STATUS_DIRE
-                ));
-                matchTemp.setBarracksStatusRadiant(
+                )));
+                matchTemp.setBarracksStatusRadiant(cursor.getInt(
                         cursor.getColumnIndexOrThrow(MatchDetailsEntry.COLUMN_NAME_BARRACKS_STATUS_RADIANT
-                ));
-                matchTemp.setCluster(
+                )));
+                matchTemp.setCluster(cursor.getInt(
                         cursor.getColumnIndexOrThrow(MatchDetailsEntry.COLUMN_NAME_CLUSTER
-                ));
-                matchTemp.setFirstBloodTime(
+                )));
+                matchTemp.setFirstBloodTime(cursor.getInt(
                         cursor.getColumnIndexOrThrow(MatchDetailsEntry.COLUMN_NAME_FIRST_BLOOD_TIME
-                ));
-                matchTemp.setHumanPlayers(
+                )));
+                matchTemp.setHumanPlayers(cursor.getInt(
                         cursor.getColumnIndexOrThrow(MatchDetailsEntry.COLUMN_NAME_HUMAN_PLAYERS
-                ));
-                matchTemp.setLeagueid(
+                )));
+                matchTemp.setLeagueid(cursor.getInt(
                         cursor.getColumnIndexOrThrow(MatchDetailsEntry.COLUMN_NAME_LEAGUE_ID
-                ));
-                matchTemp.setGameMode(
+                )));
+                matchTemp.setGameMode(cursor.getInt(
                         cursor.getColumnIndexOrThrow(MatchDetailsEntry.COLUMN_NAME_GAME_MODE
-                ));
-                matchTemp.setFlags(
+                )));
+                matchTemp.setFlags(cursor.getInt(
                         cursor.getColumnIndexOrThrow(MatchDetailsEntry.COLUMN_NAME_FLAGS
-                ));
-                matchTemp.setRadiantScore(
+                )));
+                matchTemp.setRadiantScore(cursor.getInt(
                         cursor.getColumnIndexOrThrow(MatchDetailsEntry.COLUMN_NAME_RADIANT_SCORE
-                ));
-                matchTemp.setDireScore(
+                )));
+                matchTemp.setDireScore(cursor.getInt(
                         cursor.getColumnIndexOrThrow(MatchDetailsEntry.COLUMN_NAME_DIRE_SCORE
-                ));
-                matchTemp.setRadiantWin(
+                )));
+                matchTemp.setRadiantWin(cursor.getInt(
                         cursor.getColumnIndexOrThrow(MatchDetailsEntry.COLUMN_NAME_RADIANT_WIN
-                ) == 1 );
+                )) == 1 );
                 matchTemp.setPlayers(new ArrayList<PlayerDetails>());
                 matchesDetails.add(matchTemp);
             }
             PlayerDetails playerDetails = new PlayerDetails();
-            playerDetails.setAccountId(
+            playerDetails.setAccountId(cursor.getLong(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_ACCOUNT_ID)
-            );
-            playerDetails.setAssists(
+            ));
+            playerDetails.setAssists(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_ASSISTS)
-            );
-            playerDetails.setBackpack0(
+            ) );
+            playerDetails.setBackpack0(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_BACKPACK_0)
-            );
-            playerDetails.setBackpack1(
+            ));
+            playerDetails.setBackpack1(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_BACKPACK_1)
-            );
-            playerDetails.setBackpack2(
+            ));
+            playerDetails.setBackpack2(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_BACKPACK_2)
-            );
-            playerDetails.setDeaths(
+            ));
+            playerDetails.setDeaths(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_DEATHS)
-            );
-            playerDetails.setDenies(
+            ));
+            playerDetails.setDenies(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_DENIES)
-            );
-            playerDetails.setGold(
+            ));
+            playerDetails.setGold(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_GOLD)
-            );
-            playerDetails.setGoldPerMin(
+            ));
+            playerDetails.setGoldPerMin(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_GOLD_PER_MIN)
-            );
-            playerDetails.setGoldSpent(
+            ));
+            playerDetails.setGoldSpent(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_GOLD_SPENT)
-            );
-            playerDetails.setHeroDamage(
+            ));
+            playerDetails.setHeroDamage(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_HERO_DAMAGE)
-            );
-            playerDetails.setHeroHealing(
+            ));
+            playerDetails.setHeroHealing(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_HERO_HEALING)
-            );
-            playerDetails.setHeroId(
+            ));
+            playerDetails.setHeroId(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_HERO_ID)
-            );
-            playerDetails.setItem0(
+            ));
+            playerDetails.setItem0(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_ITEM_0)
-            );
-            playerDetails.setItem1(
+            ));
+            playerDetails.setItem1(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_ITEM_1)
-            );
-            playerDetails.setItem2(
+            ));
+            playerDetails.setItem2(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_ITEM_2)
-            );
-            playerDetails.setItem3(
+            ));
+            playerDetails.setItem3(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_ITEM_3)
-            );
-            playerDetails.setItem4(
+            ));
+            playerDetails.setItem4(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_ITEM_4)
-            );
-            playerDetails.setItem5(
+            ));
+            playerDetails.setItem5(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_ITEM_5)
-            );
-            playerDetails.setPlayerSlot(
+            ));
+            playerDetails.setPlayerSlot(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_PLAYER_SLOT)
-            );
-            playerDetails.setLeaverStatus(
+            ));
+            playerDetails.setLeaverStatus(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_LEAVER_STATUS)
-            );
-            playerDetails.setLevel(
+            ));
+            playerDetails.setLevel(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_LEVEL)
-            );
-            playerDetails.setScaledHeroDamage(
+            ));
+            playerDetails.setScaledHeroDamage(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_SCALED_HERO_DAMAGE)
-            );
-            playerDetails.setScaledHeroHealing(
+            ));
+            playerDetails.setScaledHeroHealing(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_SCALED_HERO_HEALING)
-            );
-            playerDetails.setScaledTowerDamage(
+            ));
+            playerDetails.setScaledTowerDamage(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_SCALED_TOWER_DAMAGE)
-            );
-            playerDetails.setTowerDamage(
+            ));
+            playerDetails.setTowerDamage(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_TOWER_DAMAGE)
-            );
-            playerDetails.setXpPerMin(
+            ));
+            playerDetails.setXpPerMin(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_XP_PER_MIN)
-            );
-            playerDetails.setLastHits(
+            ));
+            playerDetails.setLastHits(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_LAST_HITS)
-            );
-            playerDetails.setKills(
+            ));
+            playerDetails.setKills(cursor.getInt(
                     cursor.getColumnIndexOrThrow(PlayerDetailsEntry.COLUMN_NAME_KILLS)
-            );
+            ));
             matchesDetails.get(matchesDetails.size()-1).getPlayers().add(playerDetails);
         }
 
