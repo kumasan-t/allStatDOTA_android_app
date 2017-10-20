@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,11 +48,10 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        getBaseContext().deleteDatabase("dotaStat.db");
         if (doesDatabaseExist(getBaseContext(),"dotaStat.db")) {
             Log.i(TAG,"Database exists at" + getBaseContext()
                     .getDatabasePath("dotaStat.db"));
-            AsyncTask<Void,Void,MatchHistory> dbReadTask = new DatabaseReadTask();
+            AsyncTask<Void,Void,List<MatchDetails>> dbReadTask = new DatabaseReadMatchDetailsTask();
             dbReadTask.execute();
         } else {
             Log.i(TAG,"Database doesn't exists");
@@ -172,6 +172,19 @@ public class MainActivity extends AppCompatActivity {
             StatDbHelper dbHelper = new StatDbHelper(getBaseContext());
             dbHelper.putMatchDetails(matchDetails[0]);
             return matchDetails[0];
+        }
+    }
+
+    private class DatabaseReadMatchDetailsTask extends AsyncTask<Void,Void,List<MatchDetails>> {
+        @Override
+        protected List<MatchDetails> doInBackground(Void... voids) {
+            StatDbHelper dbHelper = new StatDbHelper(getBaseContext());
+            return dbHelper.readMatchDetailsFromDatabase();
+        }
+
+        @Override
+        protected void onPostExecute(List<MatchDetails> matchDetails) {
+            Log.d(TAG, "Total number of MatchDetails entries read: " + matchDetails.size());
         }
     }
 }
