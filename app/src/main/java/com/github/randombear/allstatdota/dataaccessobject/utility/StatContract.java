@@ -60,6 +60,7 @@ public final class StatContract {
         public static final String COLUMN_NAME_FLAGS = "flags";
         public static final String COLUMN_NAME_RADIANT_SCORE = "radiant_score";
         public static final String COLUMN_NAME_DIRE_SCORE = "dire_score";
+        public static final String COLUMN_NAME_RADIANT_WIN = "radiant_win";
     }
 
     public static class PlayerDetailsEntry implements BaseColumns {
