@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -96,8 +97,33 @@ public class MainActivity extends AppCompatActivity {
      */
     private void refreshAndUpdate(JSONObject result) {
         MatchHistory matchHistory = MatchHistory.createFromJSON(result);
-        DatabasePopulateTask dbPopulate = new DatabasePopulateTask();
-        dbPopulate.execute(matchHistory);
+        mDetailsCounter = matchHistory.getMatches().size();
+        mDetailedMatchList = new ArrayList<>();
+        for (Match m : matchHistory.getMatches()) {
+            DotaDataRequest request = new DotaDataRequest(getBaseContext());
+            request.getMatchDetails("" + m.getMatchId(), new VolleyCallback() {
+                @Override
+                public void onSuccessResponse(JSONObject result) {
+                    MatchDetails matchDetails = MatchDetails.createFromJSON(result);
+                    mDetailedMatchList.add(matchDetails);
+                    mDetailsCounter--;
+                    if (mDetailsCounter == 0) {
+                        DatabasePutMatchDetailsTask matchDetailsTask =
+                                new DatabasePutMatchDetailsTask();
+                        matchDetailsTask.execute(mDetailedMatchList);
+                        mAdapter = new MatchDetailsAdapter(mDetailedMatchList,getBaseContext());
+                        mRecyclerView.setAdapter(mAdapter);
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    mDetailsCounter--;
+                }
+            });
+        }
     }
 
     /**
@@ -109,47 +135,6 @@ public class MainActivity extends AppCompatActivity {
     private static boolean doesDatabaseExist(Context context, String dbName) {
         File dbFile = context.getDatabasePath(dbName);
         return dbFile.exists();
-    }
-
-    private class DatabasePopulateTask extends AsyncTask<MatchHistory,Void,MatchHistory[]> {
-        @Override
-        protected MatchHistory[] doInBackground(MatchHistory... matchHistories) {
-            StatDbHelper dbHelper = new StatDbHelper(getBaseContext());
-            for (MatchHistory m : matchHistories) {
-                dbHelper.populateDatabase(m);
-            }
-            return matchHistories;
-        }
-
-        @Override
-        protected void onPostExecute(MatchHistory[] matchHistory) {
-            mDetailsCounter = matchHistory[0].getMatches().size();
-            mDetailedMatchList = new ArrayList<>();
-            for (Match m : matchHistory[0].getMatches()) {
-                DotaDataRequest request = new DotaDataRequest(getBaseContext());
-                request.getMatchDetails("" + m.getMatchId(), new VolleyCallback() {
-                    @Override
-                    public void onSuccessResponse(JSONObject result) {
-                        MatchDetails matchDetails = MatchDetails.createFromJSON(result);
-                        mDetailedMatchList.add(matchDetails);
-                        mDetailsCounter--;
-                        if (mDetailsCounter == 0) {
-                            DatabasePutMatchDetailsTask matchDetailsTask =
-                                    new DatabasePutMatchDetailsTask();
-                            matchDetailsTask.execute(mDetailedMatchList);
-                            mAdapter = new MatchDetailsAdapter(mDetailedMatchList,getBaseContext());
-                            mRecyclerView.setAdapter(mAdapter);
-                        }
-                    }
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                        mDetailsCounter--;
-                    }
-                });
-            }
-        }
     }
 
     private class DatabasePutMatchDetailsTask extends AsyncTask<ArrayList<MatchDetails>, Void, ArrayList<MatchDetails>> {
