@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/match_card_linearLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,39 +11,111 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="234dp"
+        android:layout_height="190dp"
         android:layout_gravity="center"
         android:layout_margin="4dp"
         app:cardCornerRadius="4dp"
         app:cardElevation="5dp">
 
+
         <RelativeLayout
-            android:id="@+id/match_card_cardView_relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/match_card_cardView_relativeLayout_imageView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/match_card_cardView_relativeLayout_textView_matchID"
-                android:layout_alignParentEnd="true"
-                android:scaleType="fitXY"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true" />
-
-            <TextView
-                android:id="@+id/match_card_cardView_relativeLayout_textView_matchID"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_alignParentBottom="true"
+                android:id="@+id/imageView_hero"
+                android:layout_width="145dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:text="">
+                android:layout_alignParentTop="true"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/a1_vert" />
 
-            </TextView>
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/imageView_hero"
+                android:layout_toEndOf="@+id/imageView_hero"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView_matchID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.07"
+                    android:fontFamily="sans-serif"
+                    android:paddingTop="7dp"
+                    android:text="MatchID"
+                    android:textAlignment="center"
+                    android:textColor="@color/dotaRed"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView_Result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.07"
+                    android:text="RESULT"
+                    android:textAlignment="center"
+                    android:textColor="@color/dotaGreen"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <TextView
+                    android:id="@+id/textView_Side"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.07"
+                    android:paddingLeft="9dp"
+                    android:paddingTop="11dp"
+                    android:text="Side:" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.07"
+                    android:paddingLeft="9dp"
+                    android:text="Duration:" />
+
+                <TextView
+                    android:id="@+id/textView_KDA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.07"
+                    android:paddingLeft="9dp"
+                    android:text="KDA:" />
+
+                <TextView
+                    android:id="@+id/textView_GPM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.07"
+                    android:paddingLeft="9dp"
+                    android:text="GPM:" />
+
+                <TextView
+                    android:id="@+id/textView_XPM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.07"
+                    android:paddingLeft="9dp"
+                    android:text="XPM:" />
+
+            </LinearLayout>
 
         </RelativeLayout>
-
     </android.support.v7.widget.CardView>
 </LinearLayout>

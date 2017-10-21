@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#1d1d1d</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorBlack">#000000</color>
+    <color name="dotaRed">#b71c1c</color>
+    <color name="dotaGreen">#1b5e20</color>
+    <color name="separator">#202020</color>
 </resources>

@@ -35,8 +35,8 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
         public ViewHolder(View v) {
             super(v);
             mCardView = (LinearLayout) v;
-            mTextView = v.findViewById(R.id.match_card_cardView_relativeLayout_textView_matchID);
-            mImageView = v.findViewById(R.id.match_card_cardView_relativeLayout_imageView);
+            mTextView = v.findViewById(R.id.textView_matchID);
+            mImageView = v.findViewById(R.id.imageView_hero);
         }
     }
 
@@ -56,7 +56,7 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         MatchDetails matchDetails = mMatchList.get(position);
         PlayerDetails playerDetails = getPlayerSelf(matchDetails);
-        String mDrawableName = "a" + playerDetails.getHeroId() + "_sb";
+        String mDrawableName = "a" + playerDetails.getHeroId() + "_vert";
         int resID = mContext.getResources().getIdentifier(mDrawableName , "drawable", mContext.getPackageName());
         holder.mImageView.setImageResource(resID);
     }

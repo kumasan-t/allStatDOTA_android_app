@@ -11,7 +11,7 @@ import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.github.randombear.allstatdota.R;
-import com.github.randombear.allstatdota.adapter.MatchAdapter;
+import com.github.randombear.allstatdota.adapter.MatchDetailsAdapter;
 import com.github.randombear.allstatdota.dataaccessobject.entities.Match;
 import com.github.randombear.allstatdota.dataaccessobject.entities.MatchDetails;
 import com.github.randombear.allstatdota.dataaccessobject.entities.MatchHistory;
@@ -98,9 +98,6 @@ public class MainActivity extends AppCompatActivity {
         MatchHistory matchHistory = MatchHistory.createFromJSON(result);
         DatabasePopulateTask dbPopulate = new DatabasePopulateTask();
         dbPopulate.execute(matchHistory);
-        mAdapter = new MatchAdapter(matchHistory,getBaseContext());
-        mRecyclerView.setAdapter(mAdapter);
-        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     /**
@@ -112,19 +109,6 @@ public class MainActivity extends AppCompatActivity {
     private static boolean doesDatabaseExist(Context context, String dbName) {
         File dbFile = context.getDatabasePath(dbName);
         return dbFile.exists();
-    }
-
-    private class DatabaseReadTask extends AsyncTask<Void,Void,MatchHistory> {
-        @Override
-        protected MatchHistory doInBackground(Void ... voids) {
-            StatDbHelper dbHelper = new StatDbHelper(getBaseContext());
-            return dbHelper.readMatchHistoryFromDatabase();
-        }
-
-        protected void onPostExecute(MatchHistory matchHistory) {
-            mAdapter = new MatchAdapter(matchHistory,getBaseContext());
-            mRecyclerView.setAdapter(mAdapter);
-        }
     }
 
     private class DatabasePopulateTask extends AsyncTask<MatchHistory,Void,MatchHistory[]> {
@@ -153,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
                             DatabasePutMatchDetailsTask matchDetailsTask =
                                     new DatabasePutMatchDetailsTask();
                             matchDetailsTask.execute(mDetailedMatchList);
+                            mAdapter = new MatchDetailsAdapter(mDetailedMatchList,getBaseContext());
+                            mRecyclerView.setAdapter(mAdapter);
                         }
                     }
 
@@ -185,6 +171,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<MatchDetails> matchDetails) {
             Log.d(TAG, "Total number of MatchDetails entries read: " + matchDetails.size());
+            mDetailedMatchList = (ArrayList<MatchDetails>) matchDetails;
+            mAdapter = new MatchDetailsAdapter(mDetailedMatchList,getBaseContext());
+            mRecyclerView.setAdapter(mAdapter);
         }
     }
 }
