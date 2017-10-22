@@ -111,6 +111,13 @@ public class MainActivity extends AppCompatActivity {
                         DatabasePutMatchDetailsTask matchDetailsTask =
                                 new DatabasePutMatchDetailsTask();
                         matchDetailsTask.execute(mDetailedMatchList);
+                        //noinspection Since15
+                        mDetailedMatchList.sort(new Comparator<MatchDetails>() {
+                            @Override
+                            public int compare(MatchDetails matchDetails, MatchDetails t1) {
+                                return matchDetails.getMatchSeqNum() <= t1.getMatchSeqNum() ? 1 : -1;
+                            }
+                        });
                         mAdapter = new MatchDetailsAdapter(mDetailedMatchList,getBaseContext());
                         mRecyclerView.setAdapter(mAdapter);
                         mSwipeRefreshLayout.setRefreshing(false);
