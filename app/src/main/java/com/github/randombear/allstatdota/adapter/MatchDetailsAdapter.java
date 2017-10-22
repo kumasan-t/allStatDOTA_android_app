@@ -1,5 +1,6 @@
 package com.github.randombear.allstatdota.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,14 +30,26 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public LinearLayout mCardView;
-        public TextView mTextView;
-        public ImageView mImageView;
+        private LinearLayout mCardView;
+        private ImageView mImageView;
+        private TextView mTextViewResult;
+        private TextView mTextViewMatchID;
+        private TextView mTextViewSide;
+        private TextView mTextViewKDA;
+        private TextView mTextViewGPM;
+        private TextView mTextViewXPM;
+        private TextView mTextViewDuration;
         public ViewHolder(View v) {
             super(v);
             mCardView = (LinearLayout) v;
-            mTextView = v.findViewById(R.id.textView_matchID);
+            mTextViewMatchID = v.findViewById(R.id.textView_matchID);
             mImageView = v.findViewById(R.id.imageView_hero);
+            mTextViewGPM = v.findViewById(R.id.textView_GPM);
+            mTextViewKDA = v.findViewById(R.id.textView_KDA);
+            mTextViewResult = v.findViewById(R.id.textView_Result);
+            mTextViewSide = v.findViewById(R.id.textView_Side);
+            mTextViewXPM = v.findViewById(R.id.textView_XPM);
+            mTextViewDuration = v.findViewById(R.id.textView_Duration);
         }
     }
 
@@ -52,6 +65,7 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
         return new ViewHolder(v);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         MatchDetails matchDetails = mMatchList.get(position);
@@ -59,6 +73,28 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
         String mDrawableName = "a" + playerDetails.getHeroId() + "_vert";
         int resID = mContext.getResources().getIdentifier(mDrawableName , "drawable", mContext.getPackageName());
         holder.mImageView.setImageResource(resID);
+        if ((playerDetails.getPlayerSlot() >> 7 & 1 ) == 0) {
+            holder.mTextViewSide.setText(mContext.getResources().getString(R.string.card_Side) + " Radiant");
+        } else {
+            holder.mTextViewSide.setText(mContext.getResources().getString(R.string.card_Side) + " Dire");
+        }
+        if (matchDetails.isRadiantWin() & (playerDetails.getPlayerSlot() >> 7 & 1 ) == 0) {
+            holder.mTextViewResult.setText("WIN");
+            holder.mTextViewResult.setTextColor(mContext.getResources().getColor(R.color.palette_yellow));
+        } else if (!matchDetails.isRadiantWin() & (playerDetails.getPlayerSlot() >> 7 & 1 ) != 0) {
+            holder.mTextViewResult.setText("WIN");
+            holder.mTextViewResult.setTextColor(mContext.getResources().getColor(R.color.palette_yellow));
+        } else {
+            holder.mTextViewResult.setText("LOSS");
+            holder.mTextViewResult.setTextColor(mContext.getResources().getColor(R.color.palette_lightRed));
+        }
+        holder.mTextViewMatchID.setText(mContext.getResources().getString(R.string.card_matchID) + " " + matchDetails.getMatchId());
+        holder.mTextViewXPM.setText(mContext.getResources().getString(R.string.card_XPM) + " " + playerDetails.getXpPerMin());
+        holder.mTextViewGPM.setText(mContext.getResources().getString(R.string.card_GPM) + " " + playerDetails.getGoldPerMin());
+        holder.mTextViewKDA.setText(mContext.getResources().getString(R.string.card_KDA) + " " + playerDetails.getKills() +
+        "/" + playerDetails.getDeaths() + "/" + playerDetails.getAssists());
+        holder.mTextViewDuration.setText(mContext.getResources().getString(R.string.card_Duration) +
+               " " + matchDetails.getDuration() / 60 + ":" + matchDetails.getDuration() % 60);
     }
 
     /**

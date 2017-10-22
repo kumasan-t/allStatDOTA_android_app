@@ -3,4 +3,10 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="activity_splash_layout_imageview_contentdescription">DOTA 2 logo</string>
+    <string name="card_Side">Side:</string>
+    <string name="card_Duration">Duration:</string>
+    <string name="card_KDA">KDA:</string>
+    <string name="card_GPM">GPM:</string>
+    <string name="card_XPM">XPM:</string>
+    <string name="card_matchID">Match ID: </string>
 </resources>

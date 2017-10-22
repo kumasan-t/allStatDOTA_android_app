@@ -20,7 +20,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary">
 
             <ImageView
                 android:id="@+id/imageView_hero"
@@ -53,10 +54,12 @@
                     android:fontFamily="sans-serif"
                     android:paddingTop="7dp"
                     android:text="MatchID"
-                    android:textAlignment="center"
-                    android:textColor="@color/dotaRed"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:paddingRight="13dp"
+                    android:paddingEnd="13dp"
+                    android:textAlignment="viewEnd"
+                    android:layout_gravity="end"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/textView_Result"
@@ -64,14 +67,17 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.07"
                     android:text="RESULT"
-                    android:textAlignment="center"
-                    android:textColor="@color/dotaGreen"
+                    android:paddingRight="13dp"
+                    android:paddingEnd="13dp"
+                    android:textAlignment="viewEnd"
+                    android:layout_gravity="end"
+                    android:textColor="@color/palette_yellow"
                     android:textStyle="bold" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@android:color/darker_gray"/>
+                    android:background="@color/colorPrimaryDark"/>
 
                 <TextView
                     android:id="@+id/textView_Side"
@@ -79,16 +85,28 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.07"
                     android:paddingLeft="9dp"
+                    android:paddingStart="9dp"
+                    android:paddingRight="13dp"
+                    android:paddingEnd="13dp"
                     android:paddingTop="11dp"
-                    android:text="Side:" />
+                    android:textAlignment="viewEnd"
+                    android:layout_gravity="end"
+                    android:text="Side:"
+                    android:textColor="@android:color/white" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/textView_Duration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.07"
                     android:paddingLeft="9dp"
-                    android:text="Duration:" />
+                    android:paddingStart="9dp"
+                    android:paddingRight="13dp"
+                    android:paddingEnd="13dp"
+                    android:textAlignment="viewEnd"
+                    android:layout_gravity="end"
+                    android:text="Duration:"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/textView_KDA"
@@ -96,7 +114,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.07"
                     android:paddingLeft="9dp"
-                    android:text="KDA:" />
+                    android:paddingStart="9dp"
+                    android:paddingRight="13dp"
+                    android:paddingEnd="13dp"
+                    android:textAlignment="viewEnd"
+                    android:layout_gravity="end"
+                    android:text="KDA:"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/textView_GPM"
@@ -104,7 +128,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.07"
                     android:paddingLeft="9dp"
-                    android:text="GPM:" />
+                    android:paddingStart="9dp"
+                    android:paddingRight="13dp"
+                    android:paddingEnd="13dp"
+                    android:textAlignment="viewEnd"
+                    android:layout_gravity="end"
+                    android:text="GPM:"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/textView_XPM"
@@ -112,7 +142,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.07"
                     android:paddingLeft="9dp"
-                    android:text="XPM:" />
+                    android:paddingStart="9dp"
+                    android:paddingRight="13dp"
+                    android:paddingEnd="13dp"
+                    android:textAlignment="viewEnd"
+                    android:layout_gravity="end"
+                    android:text="XPM:"
+                    android:textColor="@android:color/white" />
 
             </LinearLayout>
 

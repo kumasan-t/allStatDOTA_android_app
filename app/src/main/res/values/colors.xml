@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2d2d2e</color>
-    <color name="colorPrimaryDark">#1d1d1d</color>
+    <color name="colorPrimary">#2f2f2f</color>
+    <color name="colorPrimaryDark">#2b2a2a</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorBlack">#000000</color>
-    <color name="dotaRed">#b71c1c</color>
-    <color name="dotaGreen">#1b5e20</color>
+    <color name="dotaRed">#d12020</color>
+    <color name="palette_lightRed">#de4414</color>
+    <color name="palette_yellow">#c5931b</color>
     <color name="separator">#202020</color>
 </resources>
