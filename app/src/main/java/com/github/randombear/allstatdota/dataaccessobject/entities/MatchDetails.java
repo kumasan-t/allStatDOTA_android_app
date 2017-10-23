@@ -6,6 +6,7 @@ package com.github.randombear.allstatdota.dataaccessobject.entities;
  * =================================
  */
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import android.os.Parcel;
@@ -48,6 +49,7 @@ public class MatchDetails implements Parcelable {
         })
         public MatchDetails createFromParcel(Parcel in) {
             MatchDetails instance = new MatchDetails();
+            instance.setPlayers(new ArrayList<PlayerDetails>());
             in.readList(instance.players, (com.github.randombear.allstatdota
                     .dataaccessobject
                     .entities.PlayerDetails.class.getClassLoader()));
