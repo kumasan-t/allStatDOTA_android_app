@@ -5,10 +5,13 @@ package com.github.randombear.allstatdota.dataaccessobject.entities;
  * Created by randomBEAR on 04/08/2017.
  * =================================
  */
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class PlayerDetails {
+public class PlayerDetails implements Parcelable {
 
     private long accountId;
     private int playerSlot;
@@ -39,7 +42,53 @@ public class PlayerDetails {
     private int scaledHeroDamage;
     private int scaledTowerDamage;
     private int scaledHeroHealing;
-    //private List<AbilityUpgrade> abilityUpgrades = null;
+    public final static Parcelable.Creator<PlayerDetails> CREATOR = new Creator<PlayerDetails>() {
+
+
+        @SuppressWarnings({
+                "unchecked"
+        })
+        public PlayerDetails createFromParcel(Parcel in) {
+            return new PlayerDetails(in);
+        }
+
+        public PlayerDetails[] newArray(int size) {
+            return (new PlayerDetails[size]);
+        }
+
+    };
+
+    protected PlayerDetails(Parcel in) {
+        this.accountId = ((long) in.readValue((Long.class.getClassLoader())));
+        this.playerSlot = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.heroId = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.item0 = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.item1 = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.item2 = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.item3 = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.item4 = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.item5 = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.backpack0 = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.backpack1 = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.backpack2 = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.kills = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.deaths = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.assists = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.leaverStatus = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.lastHits = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.denies = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.goldPerMin = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.xpPerMin = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.level = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.heroDamage = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.towerDamage = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.heroHealing = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.gold = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.goldSpent = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.scaledHeroDamage = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.scaledTowerDamage = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.scaledHeroHealing = ((Integer) in.readValue((Integer.class.getClassLoader())));
+    }
 
     public long getAccountId() {
         return accountId;
@@ -352,6 +401,45 @@ public class PlayerDetails {
             e.printStackTrace();
         }
         return playerDetails;
+    }
+
+    public PlayerDetails() {
+    }
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(accountId);
+        dest.writeValue(playerSlot);
+        dest.writeValue(heroId);
+        dest.writeValue(item0);
+        dest.writeValue(item1);
+        dest.writeValue(item2);
+        dest.writeValue(item3);
+        dest.writeValue(item4);
+        dest.writeValue(item5);
+        dest.writeValue(backpack0);
+        dest.writeValue(backpack1);
+        dest.writeValue(backpack2);
+        dest.writeValue(kills);
+        dest.writeValue(deaths);
+        dest.writeValue(assists);
+        dest.writeValue(leaverStatus);
+        dest.writeValue(lastHits);
+        dest.writeValue(denies);
+        dest.writeValue(goldPerMin);
+        dest.writeValue(xpPerMin);
+        dest.writeValue(level);
+        dest.writeValue(heroDamage);
+        dest.writeValue(towerDamage);
+        dest.writeValue(heroHealing);
+        dest.writeValue(gold);
+        dest.writeValue(goldSpent);
+        dest.writeValue(scaledHeroDamage);
+        dest.writeValue(scaledTowerDamage);
+        dest.writeValue(scaledHeroHealing);
+    }
+
+    public int describeContents() {
+        return 0;
     }
 
 }
