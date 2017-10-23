@@ -2,7 +2,9 @@ package com.github.randombear.allstatdota.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import java.util.List;
  */
 
 public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapter.ViewHolder> {
+    private static String TAG = "MATCH_DETAILS";
     private List<MatchDetails> mMatchList;
     private Context mContext;
 
@@ -30,7 +33,7 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private LinearLayout mCardView;
+        private CardView mCardView;
         private ImageView mImageView;
         private TextView mTextViewResult;
         private TextView mTextViewMatchID;
@@ -41,7 +44,7 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
         private TextView mTextViewDuration;
         public ViewHolder(View v) {
             super(v);
-            mCardView = (LinearLayout) v;
+            mCardView = v.findViewById(R.id.cardView_card);
             mTextViewMatchID = v.findViewById(R.id.textView_matchID);
             mImageView = v.findViewById(R.id.imageView_hero);
             mTextViewGPM = v.findViewById(R.id.textView_GPM);
@@ -67,9 +70,18 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        MatchDetails matchDetails = mMatchList.get(position);
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        final MatchDetails matchDetails = mMatchList.get(position);
         PlayerDetails playerDetails = getPlayerSelf(matchDetails);
+
+        holder.mCardView.setClickable(true);
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG,"event onClick on element " + position);
+            }
+        });
+
         String mDrawableName = "a" + playerDetails.getHeroId() + "_vert";
         int resID = mContext.getResources().getIdentifier(mDrawableName , "drawable", mContext.getPackageName());
         holder.mImageView.setImageResource(resID);
