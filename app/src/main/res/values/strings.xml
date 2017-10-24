@@ -10,4 +10,5 @@
     <string name="card_XPM">XPM:</string>
     <string name="card_matchID">Match ID: </string>
     <string name="title_activity_match_details">MatchDetailsActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>

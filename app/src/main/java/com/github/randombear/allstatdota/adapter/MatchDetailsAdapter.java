@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.randombear.allstatdota.R;
-import com.github.randombear.allstatdota.activities.MatchDetailsActivity;
+import com.github.randombear.allstatdota.activities.MainActivity;
 import com.github.randombear.allstatdota.dataaccessobject.entities.MatchDetails;
 import com.github.randombear.allstatdota.dataaccessobject.entities.PlayerDetails;
 
@@ -83,7 +83,7 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
             @Override
             public void onClick(View view) {
                 Log.d(TAG,"event onClick on element " + position);
-                Intent intent = new Intent(mContext, MatchDetailsActivity.class);
+                Intent intent = new Intent(mContext, MainActivity.class);
                 intent.putExtra(INTENT_EXTRA,matchDetails);
                 mContext.startActivity(intent);
             }

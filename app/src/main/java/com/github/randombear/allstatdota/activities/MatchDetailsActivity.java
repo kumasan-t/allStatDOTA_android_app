@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 
 import com.github.randombear.allstatdota.R;
 import com.github.randombear.allstatdota.dataaccessobject.entities.MatchDetails;
@@ -16,6 +17,7 @@ public class MatchDetailsActivity extends AppCompatActivity {
     private static String TAG = "MATCH_DETAILS_ACTIVITY";
     private static String KEY_INTENT_EXTRA = "MATCH_DETAILS_EXTRA";
     private MatchDetails mMatchDetails;
+    private ListView mListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

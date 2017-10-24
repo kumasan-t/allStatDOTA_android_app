@@ -24,10 +24,6 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main" />
-        <activity
-            android:name=".activities.MatchDetailsActivity"
-            android:label="@string/title_activity_match_details"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
