@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setElevation(0);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -85,7 +86,10 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return MatchListFragment.newInstance(position);
+            if (position == 0)
+                return MatchListFragment.newInstance(position);
+            else
+                return GameStatFragment.newInstance();
         }
 
         @Override
