@@ -22,6 +22,7 @@ import com.github.randombear.allstatdota.dataaccessobject.interfaces.VolleyCallb
 import com.github.randombear.allstatdota.dataaccessobject.local.StatDbHelper;
 import com.github.randombear.allstatdota.dataaccessobject.remote.DotaDataRequest;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -169,6 +170,7 @@ public class MatchListFragment extends Fragment {
         protected void onPostExecute(List<MatchDetails> matchDetails) {
             Log.d(TAG, "Total number of MatchDetails entries read: " + matchDetails.size());
             mDetailedMatchList = (ArrayList<MatchDetails>) matchDetails;
+            EventBus.getDefault().post(new MessageEvent(mDetailedMatchList.toArray(new MatchDetails[mDetailedMatchList.size()])));
             mAdapter = new MatchDetailsAdapter(mDetailedMatchList,getContext());
             mRecyclerView.setAdapter(mAdapter);
         }
