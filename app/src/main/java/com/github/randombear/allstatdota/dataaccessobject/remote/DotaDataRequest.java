@@ -24,12 +24,13 @@ public class DotaDataRequest {
     private static String BASE_URL = "http://api.steampowered.com/IDOTA2Match_570/";
     private static String API_VERSION = "v1";
 
+    private static String MATCHES_REQUESTED = "25";
+
     private static String MATCH_HISTORY_PATH = "GetMatchHistory";
     private static String MATCH_DETAILS_PATH = "GetMatchDetails";
 
     private String mSteamAPIKey;
     private String mSteamUserID;
-
     private Context mContext;
 
     /**
@@ -51,6 +52,7 @@ public class DotaDataRequest {
                 .appendPath(API_VERSION)
                 .appendQueryParameter("key", mSteamAPIKey)
                 .appendQueryParameter("account_id", mSteamUserID)
+                .appendQueryParameter("matches_requested",MATCHES_REQUESTED)
                 .build();
 
         forwardRequest(builtURI, volleyCallback);
