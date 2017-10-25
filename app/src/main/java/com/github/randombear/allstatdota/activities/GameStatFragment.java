@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.github.randombear.allstatdota.R;
 import com.github.randombear.allstatdota.dataaccessobject.entities.MatchDetails;
 import com.github.randombear.allstatdota.dataaccessobject.local.StatDbHelper;
+import com.github.randombear.allstatdota.event.MessageEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

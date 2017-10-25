@@ -1,4 +1,4 @@
-package com.github.randombear.allstatdota.activities;
+package com.github.randombear.allstatdota.event;
 
 import com.github.randombear.allstatdota.dataaccessobject.entities.MatchDetails;
 

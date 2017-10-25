@@ -21,6 +21,7 @@ import com.github.randombear.allstatdota.dataaccessobject.entities.MatchHistory;
 import com.github.randombear.allstatdota.dataaccessobject.interfaces.VolleyCallback;
 import com.github.randombear.allstatdota.dataaccessobject.local.StatDbHelper;
 import com.github.randombear.allstatdota.dataaccessobject.remote.DotaDataRequest;
+import com.github.randombear.allstatdota.event.MessageEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
