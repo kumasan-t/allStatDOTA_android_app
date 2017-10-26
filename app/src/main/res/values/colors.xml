@@ -8,4 +8,5 @@
     <color name="palette_lightRed">#de4414</color>
     <color name="palette_yellow">#c5931b</color>
     <color name="separator">#202020</color>
+    <color name="palette_white">#fff</color>
 </resources>
