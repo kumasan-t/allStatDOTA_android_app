@@ -1,12 +1,8 @@
 package com.github.randombear.allstatdota.activities;
 
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +16,6 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.randombear.allstatdota.R;
 import com.github.randombear.allstatdota.dataaccessobject.entities.MatchDetails;
 import com.github.randombear.allstatdota.dataaccessobject.entities.PlayerDetails;
-import com.github.randombear.allstatdota.dataaccessobject.local.StatDbHelper;
 import com.github.randombear.allstatdota.event.MessageEvent;
 import com.github.randombear.allstatdota.markers.CustomForFloatMarkerView;
 import com.github.randombear.allstatdota.markers.CustomForIntegerMarkerView;
@@ -29,18 +24,12 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameStatFragment extends Fragment {
 
     private static final String TAG = "GameStat Fragment";
-
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     private MatchDetails[] mDetailedMatchList;
 
@@ -181,21 +170,6 @@ public class GameStatFragment extends Fragment {
     @Override
     public void onStop() {
         EventBus.getDefault().unregister(this);
-        Log.d(TAG,"Stopped");
         super.onStop();
     }
-
-    private class DatabaseReadMatchDetailsTask extends AsyncTask<Void,Void,List<MatchDetails>> {
-        @Override
-        protected List<MatchDetails> doInBackground(Void... voids) {
-            StatDbHelper dbHelper = new StatDbHelper(getContext());
-            return dbHelper.readMatchDetailsFromDatabase();
-        }
-
-        @Override
-        protected void onPostExecute(List<MatchDetails> matchDetails) {
-            Log.d(TAG, "Total number of MatchDetails entries read: " + matchDetails.size());
-        }
-    }
-
 }
