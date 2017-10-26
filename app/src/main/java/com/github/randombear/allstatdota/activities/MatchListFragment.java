@@ -53,7 +53,6 @@ public class MatchListFragment extends Fragment {
         //Using a Linear Layout Manager
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
         if (doesDatabaseExist(container.getContext(),"dotaStat.db")) {
             Log.i(TAG,"Database exists at" + container.getContext()
                     .getDatabasePath("dotaStat.db"));
@@ -125,6 +124,8 @@ public class MatchListFragment extends Fragment {
                                 return matchDetails.getMatchSeqNum() <= t1.getMatchSeqNum() ? 1 : -1;
                             }
                         });
+                        EventBus.getDefault().post(new MessageEvent(mDetailedMatchList.toArray(
+                                new MatchDetails[mDetailedMatchList.size()])));
                         mAdapter = new MatchDetailsAdapter(mDetailedMatchList,getContext());
                         mRecyclerView.setAdapter(mAdapter);
                         mSwipeRefreshLayout.setRefreshing(false);
@@ -171,7 +172,8 @@ public class MatchListFragment extends Fragment {
         protected void onPostExecute(List<MatchDetails> matchDetails) {
             Log.d(TAG, "Total number of MatchDetails entries read: " + matchDetails.size());
             mDetailedMatchList = (ArrayList<MatchDetails>) matchDetails;
-            EventBus.getDefault().post(new MessageEvent(mDetailedMatchList.toArray(new MatchDetails[mDetailedMatchList.size()])));
+            EventBus.getDefault().post(new MessageEvent(mDetailedMatchList.toArray(
+                    new MatchDetails[mDetailedMatchList.size()])));
             mAdapter = new MatchDetailsAdapter(mDetailedMatchList,getContext());
             mRecyclerView.setAdapter(mAdapter);
         }
