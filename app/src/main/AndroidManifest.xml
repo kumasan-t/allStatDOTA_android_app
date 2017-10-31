@@ -24,6 +24,10 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main" />
+        <activity
+            android:name=".activities.OnlinePresenceActivity"
+            android:label="@string/title_activity_user_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
