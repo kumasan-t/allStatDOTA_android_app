@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#2f2f2f</color>
     <color name="colorPrimaryDark">#2b2a2a</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#d12020</color>
     <color name="colorBlack">#000000</color>
     <color name="dotaRed">#d12020</color>
     <color name="palette_lightRed">#de4414</color>
