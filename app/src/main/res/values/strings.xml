@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">allStatDOTA</string>
     <string name="title_activity_main2">Main2Activity</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Dota Stats</string>
     <string name="activity_splash_layout_imageview_contentdescription">DOTA 2 logo</string>
     <string name="card_Side">Side:</string>
     <string name="card_Duration">Duration:</string>
@@ -12,7 +12,7 @@
     <string name="title_activity_match_details">MatchDetailsActivity</string>
     <string name="action_settings">Settings</string>
     <string name="action_sign_in">Google Sign in</string>
-    <string name="title_activity_user_list">UserListActivity</string>
+    <string name="title_activity_user_list">Users List</string>
     <string name="shared_pref_key">steam_key_id</string>
     <string name="title_activity_login">Sign In</string>
     <string name="login_text_view_text">Use your Steam ID to keep track of your matches</string>
