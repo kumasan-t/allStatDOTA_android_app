@@ -1,6 +1,7 @@
 package com.github.randombear.allstatdota.dataaccessobject.remote;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
 
@@ -41,7 +42,10 @@ public class DotaDataRequest {
      */
     public DotaDataRequest(Context context) {
         this.mContext = context;
-        this.mSteamUserID = mContext.getString(R.string.local_steam_user_id_32_bit);
+        SharedPreferences sharedPreferences =
+                context.getSharedPreferences
+                        (context.getString(R.string.shared_pref_key),Context.MODE_PRIVATE);
+        mSteamUserID = sharedPreferences.getString(context.getString(R.string.shared_pref_key),null);
         this.mSteamAPIKey = mContext.getString(R.string.local_steam_api_key);
     }
 

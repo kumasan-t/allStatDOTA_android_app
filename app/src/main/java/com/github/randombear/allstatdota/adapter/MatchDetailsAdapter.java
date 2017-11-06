@@ -3,6 +3,7 @@ package com.github.randombear.allstatdota.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -122,9 +123,11 @@ public class MatchDetailsAdapter extends RecyclerView.Adapter<MatchDetailsAdapte
      * @return          returns the user corresponding player object.
      */
     private PlayerDetails getPlayerSelf(MatchDetails match) {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(
+                mContext.getString(R.string.shared_pref_key),Context.MODE_PRIVATE);
+        long accountID = Long.parseLong(sharedPreferences.getString(mContext.getString(R.string.shared_pref_key),null));
         for (PlayerDetails p : match.getPlayers()) {
-            if (p.getAccountId() == Float.parseFloat(mContext.
-                    getString(R.string.local_steam_user_id_32_bit))) {
+            if (accountID == p.getAccountId()) {
                 return p;
             }
         }

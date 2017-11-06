@@ -1,5 +1,7 @@
 package com.github.randombear.allstatdota.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -62,10 +64,12 @@ public class GameStatFragment extends Fragment {
         List<Entry> entriesKDA = new ArrayList<>();
         List<Entry> entriesLH = new ArrayList<>();
         int matchNumber = 0;
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(
+            getContext().getString(R.string.shared_pref_key), Context.MODE_PRIVATE);
+        long accountID = Long.parseLong(sharedPreferences.getString(getContext().getString(R.string.shared_pref_key),null));
         for (int i = mDetailedMatchList.length - 1; i >= 0; i--) {
             for (PlayerDetails p : mDetailedMatchList[i].getPlayers()) {
-                if (p.getAccountId() == Float.parseFloat(getContext().
-                        getString(R.string.local_steam_user_id_32_bit))) {
+                if (accountID == p.getAccountId()) {
                     entriesGPM.add(new Entry(matchNumber, p.getGoldPerMin()));
                     entriesXPM.add(new Entry(matchNumber, p.getXpPerMin()));
                     entriesLH.add(new Entry(matchNumber, p.getLastHits()));
