@@ -31,7 +31,12 @@
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".activities.MatchDetailsActivity"
+            android:label="Match Detail"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
